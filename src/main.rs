@@ -1,6 +1,13 @@
+use gui::GUI;
+
+mod gui;
 
 /// # main
 /// method where program starts
 fn main() {
-	println!("Hello, world!");
+	let mut gui = GUI::default();
+	gui.initialize();
+	gui.show();
+	while gui.app.wait() {
+	}
 }//end main method
