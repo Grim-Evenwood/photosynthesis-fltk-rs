@@ -23,7 +23,7 @@ impl Default for GUI {
 impl GUI {
 	/// # initialize(self)
 	pub fn initialize(&mut self) {
-		self.main_window.set_size(500,500);
+		self.main_window.set_size(get_default_win_width(),get_default_win_height());
 		self.main_window.make_resizable(true);
 		self.main_window.set_label("uwu Photosynthesis");
 		self.main_window.set_label_size(32);
@@ -63,8 +63,8 @@ impl GUI {
 	}//end button_grid_test(self)
 }//end impl for GUI
 
-fn get_default_win_width() -> i32 {900}
-fn get_default_win_height() -> i32 {480}
+fn get_default_win_width() -> i32 {500}
+fn get_default_win_height() -> i32 {500}
 fn get_default_menu_height() -> i32 {20}
 fn get_default_tab_padding() -> i32 {20}
 fn get_default_grid_width() -> i32 {get_default_win_width()}
