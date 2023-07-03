@@ -21,16 +21,46 @@ impl Default for GUI {
 }//end impl Default for GUI
 
 impl GUI {
+	/// # initialize(self)
 	pub fn initialize(&mut self) {
 		self.main_window.set_size(500,500);
 		self.main_window.make_resizable(true);
 		self.main_window.set_label("uwu Photosynthesis");
 		self.main_window.set_label_size(32);
 		self.main_window.set_label_color(Color::Green);
-	}
+	}//end initialize(self)
+	
+	/// # show(self)
 	pub fn show(&mut self){
 		self.main_window.show();
-	}
+	}//end show(self)
+
+	/// # button_grid_test(self)
+	pub fn button_grid_test(&mut self) {
+		let mut test_grid: Grid<Button> = Grid::new(5,5);
+		let mut flex = FlexGrid::default();
+
+		// initialize test_grid
+		for row in 0..test_grid.rows() {
+			for col in 0..test_grid.cols() {
+				// set settings for button
+				let mut new_button = Button::default();
+				new_button.set_label(&format!("row:{}, col:{}", row, col));
+				new_button.set_size(10, 10);
+
+				// add button into grid space
+				let grid_spot = test_grid.get_mut(row, col).unwrap();
+				*grid_spot = new_button;
+			}//end looping across columns
+		}//end looping across rows
+
+		// initialize the flex grid
+		flex.initialize_flex(5, 5);
+		flex.fill_flex(&test_grid);
+
+		// make the flex actually show up in program
+		self.main_window.add(&flex.outer_flex);
+	}//end button_grid_test(self)
 }//end impl for GUI
 
 fn get_default_win_width() -> i32 {900}

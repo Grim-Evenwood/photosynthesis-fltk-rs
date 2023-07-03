@@ -7,6 +7,7 @@ mod gui;
 fn main() {
 	let mut gui = GUI::default();
 	gui.initialize();
+    gui.button_grid_test();
 	gui.show();
 	while gui.app.wait() {
 	}
