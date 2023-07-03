@@ -71,6 +71,12 @@ dependencies = [
 ]
 
 [[package]]
+name = "grid"
+version = "0.10.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "eec1c01eb1de97451ee0d60de7d81cf1e72aabefb021616027f3d1c3ec1c723c"
+
+[[package]]
 name = "paste"
 version = "1.0.12"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -81,6 +87,7 @@ name = "photosynthesis-fltk-rs"
 version = "0.1.0"
 dependencies = [
  "fltk",
+ "grid",
 ]
 
 [[package]]
