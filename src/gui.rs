@@ -60,6 +60,7 @@ impl GUI {
 
 		// make the flex actually show up in program
 		self.main_window.add(&flex.outer_flex);
+		flex.outer_flex.recalc();
 	}//end button_grid_test(self)
 }//end impl for GUI
 
