@@ -1,4 +1,5 @@
-use fltk::{window::Window, app::App, prelude::{WidgetExt, GroupExt}, enums::Color};
+use fltk::{window::Window, app::App, prelude::{WidgetExt, GroupExt, WidgetBase}, enums::{Color, Align}, button::Button, group::{Flex, self}};
+use grid::Grid;
 
 pub struct GUI {
 	/// main window of application 
@@ -31,6 +32,15 @@ impl GUI {
 		self.main_window.show();
 	}
 }//end impl for GUI
+
+fn get_default_win_width() -> i32 {900}
+fn get_default_win_height() -> i32 {480}
+fn get_default_menu_height() -> i32 {20}
+fn get_default_tab_padding() -> i32 {20}
+fn get_default_grid_width() -> i32 {get_default_win_width()}
+fn get_default_grid_height() -> i32 {get_default_win_height()-get_default_menu_height() - get_default_tab_padding()}
+fn get_max_grid_button_width() -> i32 {30}
+fn get_max_grid_button_height() -> i32 {15}
 
 /// # FlexGrid
 /// 
