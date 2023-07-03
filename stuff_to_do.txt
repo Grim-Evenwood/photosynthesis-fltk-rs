@@ -1,0 +1,15 @@
+Gui Elements to add:
+list of trees to buy
+list of trees in available area
+counter for light points
+click on element in list to buy, to buy it and subtract light points, show message if you can't
+click on element in list of available to place or upgrade
+spaces where you can place or upgrade will be highlighted on grid
+trees that have been used this turn will be darkened to show expenditure
+turn counter
+show where sun is on grid
+darken trees that are in shade (different graphic than expenditure)
+
+Game representation:
+Represent the player doing things
+Have some sort of AI to do thing as well
