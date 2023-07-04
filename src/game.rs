@@ -10,7 +10,7 @@ mod enums;
 #[derive(Debug, PartialEq, Eq, Clone)]
 pub struct Board {
 	/// the grid that represents the game board
-	pub board:Grid<String>,
+	pub board:Grid<BoardPiece>,
 }//end struct Board
 
 impl Default for Board {
@@ -48,3 +48,26 @@ pub struct BoardPiece {
 	/// All locations have a fertility level, even if that fertility won't ever be used.
 	pub fertility: Fertility,
 }//end struct BoardPiece
+
+#[allow(dead_code)]
+impl BoardPiece {
+	pub fn new(fertility: Fertility) -> BoardPiece {
+		BoardPiece { 
+			piece_type: Default::default(), 
+			animal: Default::default(), 
+			tree_size: Default::default(), 
+			fertility, 
+		}//end struct construction
+	}//end new(fertility/)
+}//end impl for BoardPiece
+
+impl Default for BoardPiece {
+    fn default() -> Self {
+        Self {
+			piece_type: Default::default(),
+			animal: Default::default(),
+			tree_size: Default::default(),
+			fertility: Fertility::OneLeaf,
+		}//end struct construction
+    }//end default()
+}//end impl Default for BoardPiece
