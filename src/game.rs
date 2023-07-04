@@ -1,13 +1,43 @@
 use grid::Grid;
-
-use crate::enums::PieceType;
+use self::enums::{PieceType, Animal, TreeSize};
 mod enums;
 
+/// # Board struct
+/// 
+/// This struct stores the state for the whole game board.
+/// It stores position in a Grid of BoardPiece objects,
+/// and each BoardPiece object stores mechanic information about that position.
 pub struct Board {
 	/// the grid that represents the game board
 	pub board:Grid<String>,
 }//end struct Board
 
+impl Default for Board {
+    fn default() -> Self {
+        Self {
+			board: Grid::new(0,0),
+		}//end struct construction
+    }//end default()
+}//end impl Default for Board
+
+/// # BoardPiece
+/// 
+/// This struct stores the mechanical information for a single spot on the board.
+/// This information is held through a combination of enums and options.
 pub struct BoardPiece {
+	/// # piece_type
+	/// 
+	/// The type of piece that this object represents.
+	/// Quite important for handling how this piece operates.
 	pub piece_type: PieceType,
+	/// # animal
+	/// 
+	/// The type of forest animal that might be on this spot.
+	/// Forest animals cannot move onto the same spot as another animal, a moonstone, or the great elder tree.
+	pub animal: Option<Animal>,
+	/// # tree_size
+	/// 
+	/// The size of tree which might be present on this space.
+	/// Not relevant unless piece_type is PieceType::Tree.
+	pub tree_size: Option<TreeSize>
 }//end struct BoardPiece
