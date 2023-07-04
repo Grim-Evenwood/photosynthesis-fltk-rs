@@ -55,6 +55,7 @@ pub struct Moon {
 	pub col1: usize,
 	pub row2: usize,
 	pub col2: usize,
+	pub full_moon: bool,
 	grid_side_length: usize,
 }//end struct Moon
 
@@ -77,6 +78,7 @@ impl Moon {
 			row2: 0,
 			col1: grid_side_length - 2,
 			col2: grid_side_length - 1,
+			full_moon: false,
 			grid_side_length,
 		}//end struct construction.
 	}//end new(grid_side_length)
@@ -203,6 +205,7 @@ impl Moon {
 			col1: new_col1,
 			row2: new_row2,
 			col2: new_col2,
+			full_moon: self.full_moon,
 			grid_side_length: self.grid_side_length,
 		}//end struct construction
 	}//end next(&self)
