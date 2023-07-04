@@ -1,5 +1,5 @@
 use grid::Grid;
-use self::enums::{PieceType, Animal, TreeSize};
+use self::enums::{PieceType, Animal, TreeSize, Fertility};
 mod enums;
 
 /// # Board struct
@@ -16,7 +16,7 @@ pub struct Board {
 impl Default for Board {
     fn default() -> Self {
         Self {
-			board: Grid::new(0,0),
+			board: Grid::new(7,7),
 		}//end struct construction
     }//end default()
 }//end impl Default for Board
@@ -41,5 +41,10 @@ pub struct BoardPiece {
 	/// 
 	/// The size of tree which might be present on this space.
 	/// Not relevant unless piece_type is PieceType::Tree.
-	pub tree_size: Option<TreeSize>
+	pub tree_size: Option<TreeSize>,
+	/// # fertility
+	/// 
+	/// The fertility level of this particular spot.
+	/// All locations have a fertility level, even if that fertility won't ever be used.
+	pub fertility: Fertility,
 }//end struct BoardPiece
