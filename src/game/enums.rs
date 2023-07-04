@@ -206,18 +206,18 @@ This enum represents the direction that the moon light is pointing towards.
 It should be noted that this is only a general direction, as moon light points in two diagonal directions.
 North, for example, would indicate the moon is pointing northeast and northwest."]
 pub enum MoonDirection {
-    North,
-    West,
     South,
     East,
+    North,
+    West,
 }//end MoonDirection
 
 impl Display for MoonDirection {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         match self {
-            MoonDirection::North => write!(f, "Pointing North"),
-            MoonDirection::East => write!(f, "Pointing East"),
             MoonDirection::South => write!(f, "Pointing South"),
+            MoonDirection::East => write!(f, "Pointing East"),
+            MoonDirection::North => write!(f, "Pointing North"),
             MoonDirection::West => write!(f, "Pointing West"),
         }//end matching self
     }//end fmt(&self, f)
@@ -226,10 +226,10 @@ impl Display for MoonDirection {
 impl MovingLightDirection for MoonDirection {
     fn next(&self) -> Self {
         match self {
-            MoonDirection::North => MoonDirection::West,
-            MoonDirection::West => MoonDirection::South,
             MoonDirection::South => MoonDirection::East,
             MoonDirection::East => MoonDirection::North,
+            MoonDirection::North => MoonDirection::West,
+            MoonDirection::West => MoonDirection::South,
         }//end matching self
     }//end next(&self)
 }//end impl MovingLightDirection for MoonDirection
