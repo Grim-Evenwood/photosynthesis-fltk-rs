@@ -225,9 +225,49 @@ pub struct Board {
 
 #[allow(dead_code)]
 impl Board {
+	/// # pass_turn(&mut self)
+	/// 
+	/// Carries out the rotation of the moon and sun, updating the area which is in shadow.
 	pub fn pass_turn(&mut self) {
 		todo!();
 	}//end pass_turn(&mut self)
+
+	/// # sun_shaded(&self)
+	/// 
+	/// Function returns parallel grid of booleans.  
+	/// 
+	/// Each element in grid of booleans says whether that spot is in shadow from the sun.  
+	/// 
+	/// So, if true, then it is shaded from the sun, and if false, then it does get sunlight.
+	pub fn sun_shaded(&self) -> Grid<bool> {
+		// instantiate parallel grid
+		let mut is_shaded: Grid<bool> = Grid::new(self.board.rows(), self.board.cols());
+		is_shaded.fill(false);
+
+		// TODO: Figure out whether each position is shaded
+
+
+		// return updated grid
+		return is_shaded;
+	}//end sun_shaded(&self)
+
+	/// # moon_shaded(&self)
+	/// 
+	/// Function returns parallel grid of booleans.  
+	/// 
+	/// Each element in grid of booleans says whether that spot is in shadow from the moon.
+	/// 
+	/// So, if true, then it is shaded from the moon, and if false, then it does get moonlight.
+	pub fn moon_shaded(&self) -> Grid<bool> {
+		// instantiate parallel grid
+		let mut is_shaded: Grid<bool> = Grid::new(self.board.rows(), self.board.cols());
+		is_shaded.fill(false);
+
+		// TODO: Figure out whether each position is shaded
+
+		// return updated grid
+		return is_shaded;
+	}//end moon_shaded(&self)
 }//end impl for Board
 
 impl Default for Board {
