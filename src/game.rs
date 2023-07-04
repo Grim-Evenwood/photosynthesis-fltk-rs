@@ -7,6 +7,29 @@ pub struct Sun {
 	direction: SunDirection,
 }//end struct Sun
 
+#[allow(dead_code)]
+impl Sun {
+	/// # new(direction)
+	/// 
+	/// Instantiates a new Sun object with a given direction to start.
+	pub fn new(direction: SunDirection) -> Sun {
+		Sun {
+			direction,
+		}//end struct construction
+	}//end new()
+
+	/// # next(&self)
+	/// 
+	/// This function calculates the next direction that the sun will point.  
+	/// 
+	/// Since the Sun is on one side at a time, this is mostly just a change in direction.
+	pub fn next(&self) -> Sun {
+		Sun {
+			direction: self.direction.next(),
+		}//end struct construction
+	}//end next(&self)
+}//end impl for Sun
+
 impl Default for Sun {
     fn default() -> Self {
         Self {
@@ -66,7 +89,7 @@ impl Moon {
 	/// 	: When the moon passes the sun, it flips between half and full moon.   
 	/// 	: Half moon light gives 1 lunar point, and full moon light gives 2 lunar points.  
 	pub fn next(&self) -> Moon {
-		/// this counter will be used to help us move things.
+		// this counter will be used to help us move things.
 		let mut spaces_left_to_move = self.grid_side_length + 2;
 
 		// reference variables to build a new moon
