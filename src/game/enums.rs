@@ -104,3 +104,47 @@ impl Display for TreeSize {
         }//end matching self
     }//end fmt(&self, f)
 }//end impl Display for TreeSize
+
+#[allow(dead_code)]
+#[derive(Debug, PartialEq, Eq, Copy, Clone, Ord, PartialOrd, Hash)]
+#[doc = r"# Fertility
+This enum represents the fertility of a spot on the board.
+This is mostly only relevant for determining harvesting points,
+and is only kept as an enum to make things connect better for those purposes."]
+pub enum Fertility {
+    OneLeaf,
+    TwoLeaf,
+    ThreeLeaf,
+    FourLeaf,
+}//end enum Fertility
+
+#[allow(dead_code)]
+impl Fertility {
+    pub fn as_int(&self) -> i32 {
+        match self {
+            Fertility::OneLeaf => 1,
+            Fertility::TwoLeaf => 2,
+            Fertility::ThreeLeaf => 3,
+            Fertility::FourLeaf => 4,
+        }//end matching self
+    }//end as_int(&self)
+    pub fn as_usize(&self) -> usize {
+        match self {
+            Fertility::OneLeaf => 1,
+            Fertility::TwoLeaf => 2,
+            Fertility::ThreeLeaf => 3,
+            Fertility::FourLeaf => 4,
+        }//end matching self
+    }//end as_usize(&self)
+}//end impl Fertility
+
+impl Display for Fertility {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            Fertility::OneLeaf => write!(f, "One-Leaf"),
+            Fertility::TwoLeaf => write!(f, "Two-Leaf"),
+            Fertility::ThreeLeaf => write!(f, "Three-Leaf"),
+            Fertility::FourLeaf => write!(f, "Four-Leaf"),
+        }//end matching self
+    }//end fmt(&self, f)
+}//end impl Display for Fertility
