@@ -1,21 +1,28 @@
-use fltk::{window::Window, app::App, prelude::{WidgetExt, GroupExt, WidgetBase}, enums::{Color, Align}, button::Button, group::{Flex, self}};
+use fltk::{window::Window, app::{App, Receiver, Sender, self}, prelude::{WidgetExt, GroupExt, WidgetBase}, enums::{Color, Align}, button::Button, group::{Flex, self}};
 use grid::Grid;
 
 pub struct GUI {
-	/// main window of application 
+	/// application everything runs inside of 
 	pub app:App,
-	/// 
-	pub main_window: Window, 
-}
+	/// main window of application
+	pub main_window: Window,
+	/// sends messages for events
+	pub msg_sender:Sender<String>,
+	/// receives messages for events
+	pub msg_receiver:Receiver<String>,
+}//end struct GUI
 
 impl Default for GUI {
 	/// # default()
 	/// 
 	/// 
 	fn default() -> GUI {
+		let (s,r) = app::channel();		
 		GUI {
 			app: App::default(),
 			main_window: Window::default(),
+			msg_sender: s,
+			msg_receiver: r,
 		}//end struct construction
 	}//end default()
 }//end impl Default for GUI
