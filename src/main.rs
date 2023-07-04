@@ -1,5 +1,4 @@
-use gui::GUI;
-
+use crate::gui::GUI;
 mod gui;
 
 /// # main
