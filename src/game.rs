@@ -17,10 +17,13 @@ impl Default for Sun {
 
 /// # Moon
 /// 
-/// This object is used to hold information on the location and direction of the Moon.
-/// The moon sort of sits in between two spots on a grid, and it shines diagonally in two direction.
-/// For this reason, the moon holds two coordinates, and sits between them.
-/// It also has a handy function to calculate the next position.
+/// This object is used to hold information on the location and direction of the Moon.  
+/// 
+/// The moon sort of sits in between two spots on a grid, and it shines diagonally in two direction.  
+/// 
+/// For this reason, the moon holds two coordinates, and sits between them.  
+/// 
+/// It also has a handy function to calculate the next position.  
 #[allow(dead_code)]
 #[derive(Debug, PartialEq, Eq, Copy, Clone, Ord, PartialOrd, Hash)]
 pub struct Moon {
@@ -36,10 +39,14 @@ pub struct Moon {
 impl Moon {
 	/// # new(grid_side_length)
 	/// 
-	/// This function creates a new moon object.
-	/// Moon objects are used with square grids, and you must provide the length of each side of that square grid, in terms of rows/cols.
-	/// The moon will start out pointing south, near the upper top right corner of the board.
-	/// This function will fail if the side length provided is less than 2.
+	/// This function creates a new moon object.  
+	/// 
+	/// Moon objects are used with square grids, and you must provide the length of each side of that square grid, in terms of rows/cols.  
+	/// 
+	/// The moon will start out pointing south, near the upper top right corner of the board.  
+	/// 
+	/// This function will fail if the side length provided is less than 2.  
+	/// 
 	pub fn new(grid_side_length: usize) -> Moon {
 		Moon {
 			direction: MoonDirection::South,
@@ -54,6 +61,10 @@ impl Moon {
 	/// # next(&self)
 	/// 
 	/// This function calculates the next position of this moon object, based on the given grid side length.
+	/// Please note that this function does not take into account the transition between full and half moon.  
+	/// 
+	/// 	: When the moon passes the sun, it flips between half and full moon.   
+	/// 	: Half moon light gives 1 lunar point, and full moon light gives 2 lunar points.  
 	pub fn next(&self) -> Moon {
 		/// this counter will be used to help us move things.
 		let mut spaces_left_to_move = self.grid_side_length + 2;
@@ -176,7 +187,8 @@ impl Moon {
 
 /// # Board struct
 /// 
-/// This struct stores the state for the whole game board.
+/// This struct stores the state for the whole game board.  
+/// 
 /// It stores position in a Grid of BoardPiece objects,
 /// and each BoardPiece object stores mechanic information about that position.
 #[derive(Debug, PartialEq, Eq, Clone)]
@@ -202,7 +214,8 @@ impl Default for Board {
 
 /// # BoardPiece
 /// 
-/// This struct stores the mechanical information for a single spot on the board.
+/// This struct stores the mechanical information for a single spot on the board.  
+/// 
 /// This information is held through a combination of enums and options.
 #[derive(Debug, PartialEq, Eq, Copy, Clone, Ord, PartialOrd, Hash)]
 pub struct BoardPiece {
@@ -228,8 +241,10 @@ pub struct BoardPiece {
 	pub fertility: Fertility,
 	/// # expended
 	/// 
-	/// Whether or not this spot has been expended this turn.
-	/// An spot on the board from which as action has been taken is expended.
+	/// Whether or not this spot has been expended this turn.  
+	/// 
+	/// An spot on the board from which as action has been taken is expended.  
+	/// 
 	/// If a spot is expended, you can't use it for anything else until the next turn.
 	expended: bool,
 }//end struct BoardPiece
@@ -238,8 +253,10 @@ pub struct BoardPiece {
 impl BoardPiece {
 	/// # new()
 	/// 
-	/// Creates a new BoardPiece identical to default() with one exception.
-	/// Fertility has no real default, so you must specify it.
+	/// Creates a new BoardPiece identical to default() with one exception.  
+	/// 
+	/// Fertility has no real default, so you must specify it.  
+	/// 
 	/// If you want to use the default Fertility of OneLeaf, use default().
 	pub fn new(fertility: Fertility) -> BoardPiece {
 		BoardPiece { 
@@ -253,9 +270,12 @@ impl BoardPiece {
 
 	/// # is_expended(self)
 	/// 
-	/// Returns whether or not this spot has been expended.
-	/// An spot on the board from which as action has been taken is expended.
-	/// If a spot is expended, you can't use it for anything else until the next turn.
+	/// Returns whether or not this spot has been expended.  
+	/// 
+	/// An spot on the board from which as action has been taken is expended.  
+	/// 
+	/// If a spot is expended, you can't use it for anything else until the next turn.  
+	/// 
 	pub fn is_expended(&self) -> bool {
 		return self.expended;
 	}//end is_expended(&self)
