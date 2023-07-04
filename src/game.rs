@@ -7,6 +7,7 @@ mod enums;
 /// This struct stores the state for the whole game board.
 /// It stores position in a Grid of BoardPiece objects,
 /// and each BoardPiece object stores mechanic information about that position.
+#[derive(Debug, PartialEq, Eq, Clone)]
 pub struct Board {
 	/// the grid that represents the game board
 	pub board:Grid<String>,
@@ -24,6 +25,7 @@ impl Default for Board {
 /// 
 /// This struct stores the mechanical information for a single spot on the board.
 /// This information is held through a combination of enums and options.
+#[derive(Debug, PartialEq, Eq, Copy, Clone, Ord, PartialOrd, Hash)]
 pub struct BoardPiece {
 	/// # piece_type
 	/// 
