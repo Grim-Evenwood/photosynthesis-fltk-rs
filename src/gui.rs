@@ -46,6 +46,7 @@ impl GUI {
 	pub fn button_grid_test(&mut self) {
 		let mut test_grid: Grid<Button> = Grid::new(5,5);
 		let mut flex = FlexGrid::default();
+		flex.clear_inner_flexes();
 
 		// initialize test_grid
 		for row in 0..test_grid.rows() {
@@ -54,6 +55,9 @@ impl GUI {
 				let mut new_button = Button::default();
 				new_button.set_label(&format!("row:{}, col:{}", row, col));
 				new_button.set_size(10, 10);
+
+				// add button click event
+				new_button.emit(self.msg_sender.clone(), format!("test:{},{}",row,col));
 
 				// add button into grid space
 				let grid_spot = test_grid.get_mut(row, col).unwrap();
