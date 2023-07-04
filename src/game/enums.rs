@@ -1,3 +1,5 @@
+use std::fmt::Display;
+
 #[allow(dead_code)]
 #[derive(Debug, PartialEq, Eq, Copy, Clone, Ord, PartialOrd, Hash)]
 #[doc = r"# PieceType
@@ -73,6 +75,18 @@ pub enum TreeSize {
     Medium,
     Large,
 }//end enum TreeSize
+
+#[allow(dead_code)]
+impl TreeSize {
+    pub fn size(&self) -> usize {
+        match self {
+            TreeSize::Seed => 0,
+            TreeSize::Small => 1,
+            TreeSize::Medium => 2,
+            TreeSize::Large => 3,
+        }//end matching self
+    }//end size()
+}//end impl for TreeSize
 
 impl Default for TreeSize {
     fn default() -> Self {
