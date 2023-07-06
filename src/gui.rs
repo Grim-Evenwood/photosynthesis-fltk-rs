@@ -76,13 +76,19 @@ impl GUI {
 			.with_label("End Turn")
 			.right_of(&txt5, get_default_txt_padding());	
 		
-		let mut buf = TextBuffer::default();
-		txt1.set_buffer(buf.clone());
-		txt2.set_buffer(buf.clone());
-		txt3.set_buffer(buf.clone());
-		txt4.set_buffer(buf.clone());
-		txt5.set_buffer(buf.clone());
-		txt6.set_buffer(buf.clone());
+		let mut buf1 = TextBuffer::default();
+		let mut buf2 = TextBuffer::default();
+		let mut buf3 = TextBuffer::default();
+		let mut buf4 = TextBuffer::default();
+		let mut buf5 = TextBuffer::default();
+		let mut buf6 = TextBuffer::default();
+
+		txt1.set_buffer(buf1.clone());
+		txt2.set_buffer(buf2.clone());
+		txt3.set_buffer(buf3.clone());
+		txt4.set_buffer(buf4.clone());
+		txt5.set_buffer(buf5.clone());
+		txt6.set_buffer(buf6.clone());
 
 		txt1.wrap_mode(text::WrapMode::AtBounds, 0);
 		txt2.wrap_mode(text::WrapMode::AtBounds, 0);
