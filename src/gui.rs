@@ -100,8 +100,32 @@ impl GUI {
 		);
 
 		self.menu.add_emit(
-			"Moon Thing\t",
-			Shortcut::Ctrl | 'm',
+			"Change Season/Winter\t",
+			Shortcut::None,
+			menu::MenuFlag::Normal,
+			self.msg_sender.clone(),
+			"MenuChoice::Save".to_string(),
+		);
+		
+		self.menu.add_emit(
+			"Change Season/Spring\t",
+			Shortcut::None,
+			menu::MenuFlag::Normal,
+			self.msg_sender.clone(),
+			"MenuChoice::Save".to_string(),
+		);
+
+		self.menu.add_emit(
+			"Change Season/Summer\t",
+			Shortcut::None,
+			menu::MenuFlag::Normal,
+			self.msg_sender.clone(),
+			"MenuChoice::Save".to_string(),
+		);
+
+		self.menu.add_emit(
+			"Change Season/Fall\t",
+			Shortcut::None,
 			menu::MenuFlag::Normal,
 			self.msg_sender.clone(),
 			"MenuChoice::Save".to_string(),
