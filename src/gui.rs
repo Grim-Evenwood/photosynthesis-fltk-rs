@@ -1,4 +1,4 @@
-use fltk::{window::Window, app::{App, Receiver, Sender, self}, prelude::{WidgetExt, GroupExt, WidgetBase}, enums::{Color, Align}, button::Button, group::{Flex, self}};
+use fltk::{window::Window, app::{App, Receiver, Sender, self}, prelude::{WidgetExt, GroupExt, WidgetBase, MenuExt}, enums::{Color, Align, Shortcut}, button::Button, group::{Flex, self}, menu::{MenuButton, SysMenuBar, self}, macros::button};
 use grid::Grid;
 
 pub struct GUI {
@@ -10,6 +10,8 @@ pub struct GUI {
 	pub msg_sender:Sender<String>,
 	/// receives messages for events
 	pub msg_receiver:Receiver<String>,
+	/// menu bar
+	pub menu:SysMenuBar
 }//end struct GUI
 
 impl Default for GUI {
@@ -23,6 +25,7 @@ impl Default for GUI {
 			main_window: Window::default(),
 			msg_sender: s,
 			msg_receiver: r,
+			menu:SysMenuBar::default()
 		}//end struct construction
 	}//end default()
 }//end impl Default for GUI
@@ -35,6 +38,10 @@ impl GUI {
 		self.main_window.set_label("uwu Photosynthesis");
 		self.main_window.set_label_size(32);
 		self.main_window.set_label_color(Color::Green);
+
+		self.menu.set_size(get_default_win_width(), get_default_menu_height());
+		self.menu.set_label_size(10);
+		self.menu.set_label_color(Color::Green);
 	}//end initialize(self)
 	
 	/// # show(self)
@@ -73,12 +80,42 @@ impl GUI {
 		self.main_window.add(&flex.outer_flex);
 		flex.outer_flex.recalc();
 	}//end button_grid_test(self)
+
+	pub fn initialize_menu(&mut self) {
+
+		self.menu.add_emit(
+			"Save\t",
+			Shortcut::Ctrl | 's',
+			menu::MenuFlag::Normal,
+			self.msg_sender.clone(),
+			"MenuChoice::Save".to_string(),
+		);
+		
+		self.menu.add_emit(
+			"Load\t",
+			Shortcut::Ctrl | 'n',
+			menu::MenuFlag::Normal,
+			self.msg_sender.clone(),
+			"MenuChoice::Save".to_string(),
+		);
+
+		self.menu.add_emit(
+			"Moon Thing\t",
+			Shortcut::Ctrl | 'm',
+			menu::MenuFlag::Normal,
+			self.msg_sender.clone(),
+			"MenuChoice::Save".to_string(),
+		);
+
+		self.main_window.add(&self.menu);
+
+	}
 }//end impl for GUI
 
 fn get_default_win_width() -> i32 {500}
 fn get_default_win_height() -> i32 {500}
 fn get_default_menu_height() -> i32 {20}
-fn get_default_tab_padding() -> i32 {20}
+fn get_default_tab_padding() -> i32 {0}
 fn get_default_grid_width() -> i32 {get_default_win_width()}
 fn get_default_grid_height() -> i32 {get_default_win_height()-get_default_menu_height() - get_default_tab_padding()}
 fn get_max_grid_button_width() -> i32 {30}
