@@ -1,4 +1,4 @@
-use fltk::{window::Window, app::{App, Receiver, Sender, self}, prelude::{WidgetExt, GroupExt, WidgetBase, MenuExt}, enums::{Color, Align, Shortcut}, button::Button, group::{Flex, self}, menu::{SysMenuBar, self}};
+use fltk::{window::Window, app::{App, Receiver, Sender, self}, prelude::{WidgetExt, GroupExt, WidgetBase, MenuExt, DisplayExt}, enums::{Color, Align, Shortcut}, button::Button, group::{Flex, self}, menu::{SysMenuBar, self}, text::{TextEditor, TextBuffer, self}};
 use grid::Grid;
 
 pub struct GUI {
@@ -33,15 +33,73 @@ impl Default for GUI {
 impl GUI {
 	/// # initialize(self)
 	pub fn initialize(&mut self) {
+		// window settings
 		self.main_window.set_size(get_default_win_width(),get_default_win_height());
 		self.main_window.make_resizable(true);
 		self.main_window.set_label("uwu Photosynthesis");
 		self.main_window.set_label_size(32);
 		self.main_window.set_label_color(Color::Green);
 
+		// top menu bar settings
 		self.menu.set_size(get_default_win_width(), get_default_menu_height());
 		self.menu.set_label_size(10);
 		self.menu.set_label_color(Color::Green);
+
+		// Text settings
+		let mut txt1 = TextEditor::default()
+			.with_size(get_default_txt_width(),get_default_txt_height())
+			.with_label("Turn")
+			.with_pos(get_default_txt_padding() * 2, self.menu.height() + self.menu.y() + 25);	
+
+		let mut txt2 = TextEditor::default()
+			.with_size(get_default_txt_width(),get_default_txt_height())
+			.with_label("Player Points")
+			.right_of(&txt1, get_default_txt_padding());	
+
+		let mut txt3 = TextEditor::default()
+			.with_size(get_default_txt_width(),get_default_txt_height())
+			.with_label("Light Points")
+			.right_of(&txt2, get_default_txt_padding());	
+
+		let mut txt4 = TextEditor::default()
+			.with_size(get_default_txt_width(),get_default_txt_height())
+			.with_label("Lunar Points")
+			.right_of(&txt3, get_default_txt_padding());	
+		
+		let mut txt5 = TextEditor::default()
+			.with_size(get_default_txt_width(),get_default_txt_height())
+			.with_label("Toggle Plan/Place")
+			.right_of(&txt4, get_default_txt_padding());	
+
+		let mut txt6 = TextEditor::default()
+			.with_size(get_default_txt_width(),get_default_txt_height())
+			.with_label("End Turn")
+			.right_of(&txt5, get_default_txt_padding());	
+		
+		let mut buf = TextBuffer::default();
+		txt1.set_buffer(buf.clone());
+		txt2.set_buffer(buf.clone());
+		txt3.set_buffer(buf.clone());
+		txt4.set_buffer(buf.clone());
+		txt5.set_buffer(buf.clone());
+		txt6.set_buffer(buf.clone());
+
+		txt1.wrap_mode(text::WrapMode::AtBounds, 0);
+		txt2.wrap_mode(text::WrapMode::AtBounds, 0);
+		txt3.wrap_mode(text::WrapMode::AtBounds, 0);
+		txt4.wrap_mode(text::WrapMode::AtBounds, 0);
+		txt5.wrap_mode(text::WrapMode::AtBounds, 0);
+		txt6.wrap_mode(text::WrapMode::AtBounds, 0);
+
+		self.main_window.add(&txt1);
+		self.main_window.add(&txt2);
+		self.main_window.add(&txt3);
+		self.main_window.add(&txt4);
+		self.main_window.add(&txt5);
+		self.main_window.add(&txt6);
+
+
+		
 	}//end initialize(self)
 	
 	/// # show(self)
@@ -136,14 +194,17 @@ impl GUI {
 	}
 }//end impl for GUI
 
-fn get_default_win_width() -> i32 {500}
-fn get_default_win_height() -> i32 {500}
-fn get_default_menu_height() -> i32 {20}
+fn get_default_win_width() -> i32 {1000}
+fn get_default_win_height() -> i32 {700}
+fn get_default_menu_height() -> i32 {30}
 fn get_default_tab_padding() -> i32 {0}
 fn get_default_grid_width() -> i32 {get_default_win_width()}
 fn get_default_grid_height() -> i32 {get_default_win_height()-get_default_menu_height() - get_default_tab_padding()}
 fn get_max_grid_button_width() -> i32 {30}
 fn get_max_grid_button_height() -> i32 {15}
+fn get_default_txt_width() -> i32 {(get_default_win_width() / 6) - (get_default_txt_padding() * 3 / 2)}
+fn get_default_txt_height() -> i32 {25}
+fn get_default_txt_padding() -> i32 {10}
 
 /// # FlexGrid
 /// 

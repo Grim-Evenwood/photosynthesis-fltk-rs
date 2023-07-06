@@ -12,7 +12,7 @@ fn main() {
 	// set up gui
 	let mut gui = GUI::default();
 	gui.initialize();
-    gui.button_grid_test();
+    // gui.button_grid_test();
 	gui.initialize_menu();
 
 	// display gui and start program

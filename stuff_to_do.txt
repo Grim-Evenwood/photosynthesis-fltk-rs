@@ -10,7 +10,7 @@ turn counter
 show where sun is on grid
 darken trees that are in shade (different graphic than expenditure)
 Moon
-season setting (in menu bar)
+✅ season setting (in menu bar)
 
 Game representation:
 Represent the player doing things
