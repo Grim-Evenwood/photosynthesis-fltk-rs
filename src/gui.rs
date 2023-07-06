@@ -2,6 +2,7 @@ use fltk::{window::Window, app::{App, Receiver, Sender, self}, prelude::{WidgetE
 use grid::Grid;
 use fltk_theme::WidgetScheme;
 use fltk_theme::SchemeType;
+use fltk_theme::widget_themes;
 
 pub struct GUI {
 	/// application everything runs inside of 
@@ -91,7 +92,11 @@ impl GUI {
 		txt2.set_buffer(buf2.clone());
 		txt3.set_buffer(buf3.clone());
 		txt4.set_buffer(buf4.clone());
-		txt6.set_color(Color::Red);
+		txt5.set_frame(widget_themes::OS_SPACER_THIN_DOWN_BOX);
+		txt5.set_color(Color::from_rgb(68,140,184));
+		txt6.set_frame(widget_themes::OS_SPACER_THIN_DOWN_BOX);
+		txt6.set_color(Color::from_rgb(184,68,68));
+		
 
 		txt1.wrap_mode(text::WrapMode::AtBounds, 0);
 		txt2.wrap_mode(text::WrapMode::AtBounds, 0);
