@@ -1,4 +1,4 @@
-use fltk::{window::Window, app::{App, Receiver, Sender, self}, prelude::{WidgetExt, GroupExt, WidgetBase, MenuExt}, enums::{Color, Align, Shortcut}, button::Button, group::{Flex, self}, menu::{MenuButton, SysMenuBar, self}, macros::button};
+use fltk::{window::Window, app::{App, Receiver, Sender, self}, prelude::{WidgetExt, GroupExt, WidgetBase, MenuExt}, enums::{Color, Align, Shortcut}, button::Button, group::{Flex, self}, menu::{SysMenuBar, self}};
 use grid::Grid;
 
 pub struct GUI {
