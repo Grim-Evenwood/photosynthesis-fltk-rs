@@ -1,5 +1,7 @@
 use fltk::{window::Window, app::{App, Receiver, Sender, self}, prelude::{WidgetExt, GroupExt, WidgetBase, MenuExt, DisplayExt}, enums::{Color, Align, Shortcut}, button::Button, group::{Flex, self}, menu::{SysMenuBar, self}, text::{TextEditor, TextBuffer, self}};
 use grid::Grid;
+use fltk_theme::WidgetScheme;
+use fltk_theme::SchemeType;
 
 pub struct GUI {
 	/// application everything runs inside of 
@@ -33,6 +35,10 @@ impl Default for GUI {
 impl GUI {
 	/// # initialize(self)
 	pub fn initialize(&mut self) {
+		// Widget Scheme 
+		let widget_scheme = WidgetScheme::new(SchemeType::Aqua);
+		widget_scheme.apply();
+
 		// window settings
 		self.main_window.set_size(get_default_win_width(),get_default_win_height());
 		self.main_window.make_resizable(true);
@@ -53,25 +59,25 @@ impl GUI {
 
 		let mut txt2 = TextEditor::default()
 			.with_size(get_default_txt_width(),get_default_txt_height())
-			.with_label("Player Points")
+			.with_label("Player/Computer Pts")
 			.right_of(&txt1, get_default_txt_padding());	
 
 		let mut txt3 = TextEditor::default()
 			.with_size(get_default_txt_width(),get_default_txt_height())
-			.with_label("Light Points")
+			.with_label("Light Pts")
 			.right_of(&txt2, get_default_txt_padding());	
 
 		let mut txt4 = TextEditor::default()
 			.with_size(get_default_txt_width(),get_default_txt_height())
-			.with_label("Lunar Points")
+			.with_label("Lunar Pts")
 			.right_of(&txt3, get_default_txt_padding());	
 		
-		let mut txt5 = TextEditor::default()
+		let mut txt5 = Button::default()
 			.with_size(get_default_txt_width(),get_default_txt_height())
 			.with_label("Toggle Plan/Place")
 			.right_of(&txt4, get_default_txt_padding());	
 
-		let mut txt6 = TextEditor::default()
+		let mut txt6 = Button::default()
 			.with_size(get_default_txt_width(),get_default_txt_height())
 			.with_label("End Turn")
 			.right_of(&txt5, get_default_txt_padding());	
@@ -80,22 +86,17 @@ impl GUI {
 		let mut buf2 = TextBuffer::default();
 		let mut buf3 = TextBuffer::default();
 		let mut buf4 = TextBuffer::default();
-		let mut buf5 = TextBuffer::default();
-		let mut buf6 = TextBuffer::default();
 
 		txt1.set_buffer(buf1.clone());
 		txt2.set_buffer(buf2.clone());
 		txt3.set_buffer(buf3.clone());
 		txt4.set_buffer(buf4.clone());
-		txt5.set_buffer(buf5.clone());
-		txt6.set_buffer(buf6.clone());
+		txt6.set_color(Color::Red);
 
 		txt1.wrap_mode(text::WrapMode::AtBounds, 0);
 		txt2.wrap_mode(text::WrapMode::AtBounds, 0);
 		txt3.wrap_mode(text::WrapMode::AtBounds, 0);
 		txt4.wrap_mode(text::WrapMode::AtBounds, 0);
-		txt5.wrap_mode(text::WrapMode::AtBounds, 0);
-		txt6.wrap_mode(text::WrapMode::AtBounds, 0);
 
 		self.main_window.add(&txt1);
 		self.main_window.add(&txt2);
@@ -104,8 +105,6 @@ impl GUI {
 		self.main_window.add(&txt5);
 		self.main_window.add(&txt6);
 
-
-		
 	}//end initialize(self)
 	
 	/// # show(self)
