@@ -306,6 +306,94 @@ impl Board {
 		self.moon = self.moon.next();
 	}//end pass_sun_and_moon(&mut self)
 
+	/// # sun_grid_starts_directions(direciton, rows, cols)
+	/// 
+	/// Helper method for board.sun_shaded().  
+	/// 
+	/// Returns an abomination of a tuple. This function has three things to return, so it just throws them all into a tuple.
+	/// 
+	/// ## parameters
+	/// direction : current direciton of the sun
+	/// rows : number of rows in current board
+	/// cols : number of cols in current board
+	/// 
+	/// ## return
+	/// Aside from the tuple, return has three things:
+	/// row_starts : parallel vector of row indices to start at in sun_shaded algorithm
+	/// col_starts : parallel vector of col indices to start at in sun_shaded algorithm
+	/// row_col_direction : another tuple. This contains the (row,col) direction. So if row is 1 and col is -1, then you would increase in row index and decrease in column index each iteration.
+	fn sun_grid_starts_directions(direction: SunDirection, rows: usize, cols: usize) -> (Vec<usize>, Vec<usize>, (i32, i32)) {
+		let row_starts: Vec<usize>;
+		let col_starts: Vec<usize>;
+		let row_col_direction: (i32, i32);
+
+		// bottom row
+		let row_starts_north = fill_new_vec(rows, rows - 1);
+		let col_starts_north = (0..cols).collect::<Vec<usize>>();
+		// leftmost column
+		let row_starts_east = (0..rows).collect::<Vec<usize>>();
+		let col_starts_east = fill_new_vec(cols, 0);
+		// top row
+		let row_starts_south = fill_new_vec(rows, 0);
+		let col_starts_south = (0..cols).collect::<Vec<usize>>();
+		// rightmost column
+		let row_starts_west = (0..rows).collect::<Vec<usize>>();
+		let col_starts_west = fill_new_vec(cols, cols - 1);
+
+		match direction {
+			SunDirection::North => {
+				// set starts to bottom row
+				row_starts = row_starts_north;
+				col_starts = col_starts_north;
+				// set direction to just decrease (go up) in row
+				row_col_direction = (-1,0);
+			}, SunDirection::Northeast => {
+				// set starts to bottom left (combination of north and east)
+				row_starts = combine_two_vecs(&row_starts_north, &row_starts_east, true);
+				col_starts = combine_two_vecs(&col_starts_north, &col_starts_east, true);
+				// set direction to decrease in row, increase in column
+				row_col_direction = (-1,1);
+			}, SunDirection::East => {
+				// set starts to leftmost column
+				row_starts = row_starts_east;
+				col_starts = col_starts_east;
+				// set direction to just increase in column
+				row_col_direction = (0,1);
+			}, SunDirection::Southeast => {
+				// set starts to top left (combination of south and east)
+				row_starts = combine_two_vecs(&row_starts_south, &row_starts_east, true);
+				col_starts = combine_two_vecs(&col_starts_south, &col_starts_east, true);
+				// set direction to increase in both row and column (go down and right)
+				row_col_direction = (1,1);
+			}, SunDirection::South => {
+				// set starts to top row
+				row_starts = row_starts_south;
+				col_starts = col_starts_south;
+				// set direction to just increase in row
+				row_col_direction = (1, 0);
+			}, SunDirection::Southwest => {
+				// set starts to top right (combination of south and west)
+				row_starts = combine_two_vecs(&row_starts_south, &row_starts_west, true);
+				col_starts = combine_two_vecs(&col_starts_south, &col_starts_west, true);
+				// set direction to increase in row, decrease in column (go down and left)
+				row_col_direction = (1,-1);
+			}, SunDirection::West => {
+				// set starts to rightmost column
+				row_starts = row_starts_west;
+				col_starts = col_starts_west;
+				// set direction to just decrease (go left) in column
+				row_col_direction = (0,-1);
+			}, SunDirection::Northwest => {
+				// set starts to bottom right
+				row_starts = combine_two_vecs(&row_starts_north, &row_starts_west, true);
+				col_starts = combine_two_vecs(&col_starts_north, &col_starts_west, true);
+				// set direction to decrease in both row and column
+				row_col_direction = (-1,-1); },
+		}//end matching sun direction
+
+		return (row_starts, col_starts, row_col_direction);
+	}//end sun-grid_starts_directions(direction, rows, cols)
+
 	/// # sun_shaded(&self)
 	/// 
 	/// Function returns parallel grid of booleans.  
@@ -319,7 +407,12 @@ impl Board {
 		is_shaded.fill(false);
 
 		// TODO: Figure out whether each position is shaded
-
+		// set some reference variables TBD by sun position
+		let start_and_direction = Board::sun_grid_starts_directions(self.sun.direction, self.board.rows(), self.board.cols());
+		let mut row_starts: Vec<usize> = start_and_direction.0;
+		let mut col_starts: Vec<usize> = start_and_direction.1;
+		let mut row_col_direction: (i32, i32) = start_and_direction.2;
+		
 
 		// return updated grid
 		return is_shaded;
@@ -353,6 +446,50 @@ impl Default for Board {
 		}//end struct construction
     }//end default()
 }//end impl Default for Board
+
+/// # fill_new_vec<T>(n:usize,value:T)
+/// 
+/// fills a new vector with specified capacity with the value specified
+/// 
+/// ## parameters
+/// n : the size of the resulting vector
+/// value : the value to fill every element of the new vec with.
+/// 
+/// ## return
+/// returns a vector of length n, in which every element is value.
+fn fill_new_vec<T: Clone>(n:usize,value:T) -> Vec<T> {
+	let mut new_vec: Vec<T> = Vec::new();
+	for _ in 0..n {
+		new_vec.push(value.clone());
+	}//end adding new values n times
+	return new_vec;
+}//end fill_new_vec<T>(n, value)
+
+/// # combine_two_vecs<T>(vec1, vec2, exclude_dupes)
+/// 
+/// Combines two vectors into one vector. Can optionally exclude duplicates.
+/// 
+/// ## params
+/// vec1 : the first vec to combine
+/// vec2 : the second vec to combine
+/// exclude_dupes : whether or not we should exclude duplicates.
+/// 
+/// ## returns
+/// Returns a new vec of type T with all elements of vec1 and vec2.
+fn combine_two_vecs<T: Clone + std::cmp::PartialEq>(vec1:&Vec<T>, vec2:&Vec<T>, exclude_dupes:bool) -> Vec<T> {
+	let mut new_vec = vec1.clone();
+
+	for item in vec2 {
+		if exclude_dupes {
+			if new_vec.contains(item) {
+				continue;
+			}//end if new_vec already contains item
+		}//end if we're excluding duplicates
+		new_vec.push(item.clone());
+	}//end looping over items from vec2
+
+	return new_vec;
+}//end combine_two_vecs<T>(vec1, vec2, exclude_dupes)
 
 /// # BoardSpot
 /// 
