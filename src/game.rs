@@ -322,10 +322,10 @@ impl Board {
 	/// row_starts : parallel vector of row indices to start at in sun_shaded algorithm
 	/// col_starts : parallel vector of col indices to start at in sun_shaded algorithm
 	/// row_col_direction : another tuple. This contains the (row,col) direction. So if row is 1 and col is -1, then you would increase in row index and decrease in column index each iteration.
-	fn sun_grid_starts_directions(direction: SunDirection, rows: usize, cols: usize) -> (Vec<usize>, Vec<usize>, (i32, i32)) {
+	fn sun_grid_starts_directions(direction: SunDirection, rows: usize, cols: usize) -> (Vec<usize>, Vec<usize>, (i8, i8)) {
 		let row_starts: Vec<usize>;
 		let col_starts: Vec<usize>;
-		let row_col_direction: (i32, i32);
+		let row_col_direction: (i8, i8);
 
 		// bottom row
 		let row_starts_north = fill_new_vec(rows, rows - 1);
@@ -411,7 +411,7 @@ impl Board {
 		let start_and_direction = Board::sun_grid_starts_directions(self.sun.direction, self.board.rows(), self.board.cols());
 		let mut row_starts: Vec<usize> = start_and_direction.0;
 		let mut col_starts: Vec<usize> = start_and_direction.1;
-		let mut row_col_direction: (i32, i32) = start_and_direction.2;
+		let mut row_col_direction: (i8, i8) = start_and_direction.2;
 		
 
 		// return updated grid
