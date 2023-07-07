@@ -223,6 +223,10 @@ impl Moon {
 pub struct Board {
 	/// the grid that represents the game board
 	pub board:Grid<BoardSpot>,
+	/// the object representing the sun
+	pub sun: Sun,
+	/// the object representing the moon
+	pub moon: Moon,
 }//end struct Board
 
 #[allow(dead_code)]
@@ -297,7 +301,9 @@ impl Board {
 	/// 
 	/// Since this function is just for moving the moon and sun, it shouldn't be called every time a player takes a turn
 	pub fn pass_sun_and_moon(&mut self) {
-		todo!();
+		// TODO: Figure out when to flip self.moon.full_moon
+		self.sun = self.sun.next();
+		self.moon = self.moon.next();
 	}//end pass_sun_and_moon(&mut self)
 
 	/// # sun_shaded(&self)
@@ -342,6 +348,8 @@ impl Default for Board {
     fn default() -> Self {
         Self {
 			board: Grid::new(7,7),
+            sun: Sun::default(),
+            moon: Moon::new(7),
 		}//end struct construction
     }//end default()
 }//end impl Default for Board
