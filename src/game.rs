@@ -355,22 +355,24 @@ impl Default for Board {
 pub struct BoardSpot {
 	/// # piece_type
 	/// 
-	/// The type of piece that this object represents.
+	/// The type of piece that this object represents.  
+	/// 
 	/// Quite important for handling how this piece operates.
 	pub piece_type: PieceType,
+	/// # tree
+	/// 
+	/// The tree present at this spot on the board, if there is one.
+	pub tree: Option<Tree>,
 	/// # animal
 	/// 
-	/// The type of forest animal that might be on this spot.
+	/// The type of forest animal that might be on this spot.  
+	/// 
 	/// Forest animals cannot move onto the same spot as another animal, a moonstone, or the great elder tree.
 	pub animal: Option<Animal>,
-	/// # tree_size
-	/// 
-	/// The size of tree which might be present on this space.
-	/// Not relevant unless piece_type is PieceType::Tree.
-	pub tree_size: Option<TreeSize>,
 	/// # fertility
 	/// 
-	/// The fertility level of this particular spot.
+	/// The fertility level of this particular spot.  
+	/// 
 	/// All locations have a fertility level, even if that fertility won't ever be used.
 	pub fertility: Fertility,
 	/// # expended
@@ -394,9 +396,9 @@ impl BoardSpot {
 	/// If you want to use the default Fertility of OneLeaf, use default().
 	pub fn new(fertility: Fertility) -> BoardSpot {
 		BoardSpot { 
-			piece_type: Default::default(), 
-			animal: Default::default(), 
-			tree_size: Default::default(), 
+			piece_type: Default::default(),
+			tree: None,
+			animal: None,
 			fertility,
 			expended: false,
 		}//end struct construction
@@ -425,11 +427,31 @@ impl BoardSpot {
 impl Default for BoardSpot {
     fn default() -> Self {
         Self {
-			piece_type: Default::default(),
-			animal: Default::default(),
-			tree_size: Default::default(),
+			piece_type: PieceType::Empty,
+			tree: None,
+			animal: None,
 			fertility: Fertility::OneLeaf,
 			expended: false,
 		}//end struct construction
     }//end default()
 }//end impl Default for BoardSpot
+
+#[derive(Debug, PartialEq, Eq, Copy, Clone, Ord, PartialOrd, Hash)]
+/// # Tree
+/// 
+/// Represents a single tree on the board.
+pub struct Tree {
+	/// The color of this particular tree. The color denotes the owner of the tree.
+	color:(u8,u8,u8),
+	/// The size of the tree.
+	size:TreeSize,
+}//end struct Tree
+
+impl Default for Tree {
+    fn default() -> Self {
+        Self {
+			color: (0,0,0),
+			size: TreeSize::Seed,
+		}//end struct construction
+    }//end default()
+}//end impl Default for Tree
