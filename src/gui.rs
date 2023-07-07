@@ -96,7 +96,6 @@ impl GUI {
 		txt5.set_color(Color::from_rgb(68,140,184));
 		txt6.set_frame(widget_themes::OS_SPACER_THIN_DOWN_BOX);
 		txt6.set_color(Color::from_rgb(184,68,68));
-		
 
 		txt1.wrap_mode(text::WrapMode::AtBounds, 0);
 		txt2.wrap_mode(text::WrapMode::AtBounds, 0);
@@ -109,7 +108,6 @@ impl GUI {
 		self.main_window.add(&txt4);
 		self.main_window.add(&txt5);
 		self.main_window.add(&txt6);
-
 	}//end initialize(self)
 	
 	/// # show(self)
@@ -117,6 +115,7 @@ impl GUI {
 		self.main_window.show();
 	}//end show(self)
 
+	#[allow(dead_code)]
 	/// # button_grid_test(self)
 	pub fn button_grid_test(&mut self) {
 		let mut test_grid: Grid<Button> = Grid::new(5,5);
@@ -130,6 +129,10 @@ impl GUI {
 				let mut new_button = Button::default();
 				new_button.set_label(&format!("row:{}, col:{}", row, col));
 				new_button.set_size(10, 10);
+
+				if new_button.width() < get_max_grid_button_width() || new_button.height() <  get_max_grid_button_height() {
+					new_button.set_label("");
+				}//end if button is too small
 
 				// add button click event
 				new_button.emit(self.msg_sender.clone(), format!("test:{},{}",row,col));
@@ -150,7 +153,6 @@ impl GUI {
 	}//end button_grid_test(self)
 
 	pub fn initialize_menu(&mut self) {
-
 		self.menu.add_emit(
 			"Save\t",
 			Shortcut::Ctrl | 's',
@@ -200,7 +202,6 @@ impl GUI {
 		);
 
 		self.main_window.add(&self.menu);
-
 	}
 }//end impl for GUI
 
