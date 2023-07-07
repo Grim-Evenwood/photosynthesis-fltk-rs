@@ -3,6 +3,7 @@ use grid::Grid;
 use fltk_theme::WidgetScheme;
 use fltk_theme::SchemeType;
 use fltk_theme::widget_themes;
+use crate::Board;
 
 pub struct GUI {
 	/// application everything runs inside of 
@@ -84,9 +85,13 @@ impl GUI {
 			.right_of(&txt5, get_default_txt_padding());	
 		
 		let mut buf1 = TextBuffer::default();
+		buf1.set_text("txt");
 		let mut buf2 = TextBuffer::default();
+		buf2.set_text("txt");
 		let mut buf3 = TextBuffer::default();
+		buf3.set_text("txt");
 		let mut buf4 = TextBuffer::default();
+		buf4.set_text("txt");
 
 		txt1.set_buffer(buf1.clone());
 		txt2.set_buffer(buf2.clone());
@@ -152,6 +157,7 @@ impl GUI {
 		flex.outer_flex.recalc();
 	}//end button_grid_test(self)
 
+	/// # initialize_menu(&mut self)
 	pub fn initialize_menu(&mut self) {
 		self.menu.add_emit(
 			"Save\t",
@@ -203,6 +209,28 @@ impl GUI {
 
 		self.main_window.add(&self.menu);
 	}
+
+	/// # initialize_board(&mut self, board)
+	/// 
+	/// This function adds the game board to the main window so it can be displayed.  
+	/// 
+	/// It also takes in the board state so it can populate that display with the initial state of the game board.
+	/// 
+	/// ## parameters
+	/// board_state : Reference to the object holding the current state of the board.
+	/// 
+	/// ## result
+	/// Board is displayed in the main window, showing the current state of the board.
+	/// 
+	pub fn initialize_board(&mut self, board_state:&Board) {
+		/*
+		TODO: Finish this method. 
+		Maybe look to button_grid_test for example of creating grid of buttons
+		and displaying it in a FlexGrid.
+		*/
+
+		todo!();
+	}//end initialize_board(&mut self, board)
 }//end impl for GUI
 
 fn get_default_win_width() -> i32 {1000}
