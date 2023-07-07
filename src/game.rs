@@ -217,6 +217,8 @@ impl Moon {
 /// 
 /// It stores position in a Grid of BoardPiece objects,
 /// and each BoardPiece object stores mechanic information about that position.
+/// 
+/// It should be noted that several methods will assume that the board is a grid of 7x7, and they will not work without that assumption.
 #[derive(Debug, PartialEq, Eq, Clone)]
 pub struct Board {
 	/// the grid that represents the game board
@@ -225,6 +227,70 @@ pub struct Board {
 
 #[allow(dead_code)]
 impl Board {
+	/// # initialize_board(&mut self)
+	/// 
+	/// This function will fill the board with appropriate board pieces for the beginning of the game.  
+	/// 
+	/// This function assumes that the board is a grid of 7x7.
+	pub fn initialize_board(&mut self) {
+		// create reference pieces to fill board with
+		let one_leaf = BoardPiece::new(Fertility::OneLeaf);
+		let two_leaf = BoardPiece::new(Fertility::TwoLeaf);
+		let three_leaf = BoardPiece::new(Fertility::ThreeLeaf);
+		let four_leaf = BoardPiece::new(Fertility::FourLeaf);
+
+		// fill whole board with four_leaf (will end up being at center)
+		self.board.fill(four_leaf);
+
+		// overwrite row index 2 and 4 with three leaf
+		for piece in self.board.iter_row_mut(2) {
+			*piece = three_leaf;
+		}//end looping over row index 2
+		for piece in self.board.iter_row_mut(4) {
+			*piece = three_leaf;
+		}//end looping over row index 4
+
+		// overwrite col index 2 and 4 with three leaf
+		for piece in self.board.iter_col_mut(2) {
+			*piece = three_leaf;
+		}//end looping over col index 2
+		for piece in self.board.iter_col_mut(4) {
+			*piece = three_leaf;
+		}//end looping over col index 4
+
+		// overwrite row index 1 and 5 with two leaf
+		for piece in self.board.iter_row_mut(1) {
+			*piece = two_leaf;
+		}//end looping over row index 1
+		for piece in self.board.iter_row_mut(5) {
+			*piece = two_leaf;
+		}//end looping over row index 5
+
+		// overwrite col index 1 and 5 with two leaf
+		for piece in self.board.iter_col_mut(1) {
+			*piece = two_leaf;
+		}//end looping over col index 1
+		for piece in self.board.iter_col_mut(5) {
+			*piece = two_leaf;
+		}//end looping over col index 5
+
+		// overwrite row index 0 and 6 with one leaf
+		for piece in self.board.iter_row_mut(0) {
+			*piece = one_leaf;
+		}//end looping over row index 0
+		for piece in self.board.iter_row_mut(6) {
+			*piece = one_leaf;
+		}//end looping over row index 6
+
+		// overwrite col index 0 and 6 with one leaf
+		for piece in self.board.iter_col_mut(0) {
+			*piece = one_leaf;
+		}//end looping over col index 0
+		for piece in self.board.iter_col_mut(6) {
+			*piece = one_leaf;
+		}//end looping over col index 6
+	}//end initialize_board(&mut self)
+
 	/// # pass_turn(&mut self)
 	/// 
 	/// Carries out the rotation of the moon and sun, updating the area which is in shadow.

@@ -7,7 +7,9 @@ use game::Board;
 /// method where program starts
 fn main() {
 	// set up program model
-	let game_board = Board::default();
+	let mut game_board = Board::default();
+	// set up game_board for beginning of the game
+	game_board.initialize_board();
 
 	// set up gui
 	let mut gui = GUI::default();
