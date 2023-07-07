@@ -291,12 +291,14 @@ impl Board {
 		}//end looping over col index 6
 	}//end initialize_board(&mut self)
 
-	/// # pass_turn(&mut self)
+	/// # pass_sun_and_moon(&mut self)
 	/// 
-	/// Carries out the rotation of the moon and sun, updating the area which is in shadow.
-	pub fn pass_turn(&mut self) {
+	/// Carries out the rotation of the moon and sun, updating the area which is in shadow.  
+	/// 
+	/// Since this function is just for moving the moon and sun, it shouldn't be called every time a player takes a turn
+	pub fn pass_sun_and_moon(&mut self) {
 		todo!();
-	}//end pass_turn(&mut self)
+	}//end pass_sun_and_moon(&mut self)
 
 	/// # sun_shaded(&self)
 	/// 
