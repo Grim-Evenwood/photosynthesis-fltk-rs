@@ -16,6 +16,8 @@ fn main() {
 	gui.initialize();
     // gui.button_grid_test();
 	gui.initialize_menu();
+	// uncomment this line when gui.initialize_board is finished
+	// gui.initialize_board(&game_board);
 
 	// display gui and start program
 	gui.show();
