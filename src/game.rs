@@ -215,14 +215,14 @@ impl Moon {
 /// 
 /// This struct stores the state for the whole game board.  
 /// 
-/// It stores position in a Grid of BoardPiece objects,
-/// and each BoardPiece object stores mechanic information about that position.
+/// It stores position in a Grid of BoardSpot objects,
+/// and each BoardSpot object stores mechanic information about that position.
 /// 
 /// It should be noted that several methods will assume that the board is a grid of 7x7, and they will not work without that assumption.
 #[derive(Debug, PartialEq, Eq, Clone)]
 pub struct Board {
 	/// the grid that represents the game board
-	pub board:Grid<BoardPiece>,
+	pub board:Grid<BoardSpot>,
 }//end struct Board
 
 #[allow(dead_code)]
@@ -234,10 +234,10 @@ impl Board {
 	/// This function assumes that the board is a grid of 7x7.
 	pub fn initialize_board(&mut self) {
 		// create reference pieces to fill board with
-		let one_leaf = BoardPiece::new(Fertility::OneLeaf);
-		let two_leaf = BoardPiece::new(Fertility::TwoLeaf);
-		let three_leaf = BoardPiece::new(Fertility::ThreeLeaf);
-		let four_leaf = BoardPiece::new(Fertility::FourLeaf);
+		let one_leaf = BoardSpot::new(Fertility::OneLeaf);
+		let two_leaf = BoardSpot::new(Fertility::TwoLeaf);
+		let three_leaf = BoardSpot::new(Fertility::ThreeLeaf);
+		let four_leaf = BoardSpot::new(Fertility::FourLeaf);
 
 		// fill whole board with four_leaf (will end up being at center)
 		self.board.fill(four_leaf);
@@ -346,13 +346,13 @@ impl Default for Board {
     }//end default()
 }//end impl Default for Board
 
-/// # BoardPiece
+/// # BoardSpot
 /// 
 /// This struct stores the mechanical information for a single spot on the board.  
 /// 
 /// This information is held through a combination of enums and options.
 #[derive(Debug, PartialEq, Eq, Copy, Clone, Ord, PartialOrd, Hash)]
-pub struct BoardPiece {
+pub struct BoardSpot {
 	/// # piece_type
 	/// 
 	/// The type of piece that this object represents.
@@ -381,19 +381,19 @@ pub struct BoardPiece {
 	/// 
 	/// If a spot is expended, you can't use it for anything else until the next turn.
 	expended: bool,
-}//end struct BoardPiece
+}//end struct BoardSpot
 
 #[allow(dead_code)]
-impl BoardPiece {
+impl BoardSpot {
 	/// # new()
 	/// 
-	/// Creates a new BoardPiece identical to default() with one exception.  
+	/// Creates a new BoardSpot identical to default() with one exception.  
 	/// 
 	/// Fertility has no real default, so you must specify it.  
 	/// 
 	/// If you want to use the default Fertility of OneLeaf, use default().
-	pub fn new(fertility: Fertility) -> BoardPiece {
-		BoardPiece { 
+	pub fn new(fertility: Fertility) -> BoardSpot {
+		BoardSpot { 
 			piece_type: Default::default(), 
 			animal: Default::default(), 
 			tree_size: Default::default(), 
@@ -420,9 +420,9 @@ impl BoardPiece {
 	pub fn expend(&mut self) {
 		self.expended = true;
 	}//end expend(self)
-}//end impl for BoardPiece
+}//end impl for BoardSpot
 
-impl Default for BoardPiece {
+impl Default for BoardSpot {
     fn default() -> Self {
         Self {
 			piece_type: Default::default(),
@@ -432,4 +432,4 @@ impl Default for BoardPiece {
 			expended: false,
 		}//end struct construction
     }//end default()
-}//end impl Default for BoardPiece
+}//end impl Default for BoardSpot
