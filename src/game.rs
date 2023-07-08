@@ -452,7 +452,8 @@ impl Default for Board {
 /// fills a new vector with specified capacity with the value specified
 /// 
 /// ## parameters
-/// n : the size of the resulting vector
+/// n : the size of the resulting vector  
+/// 
 /// value : the value to fill every element of the new vec with.
 /// 
 /// ## return
@@ -470,11 +471,13 @@ fn fill_new_vec<T: Clone>(n:usize,value:T) -> Vec<T> {
 /// Combines two vectors into one vector. Can optionally exclude duplicates.
 /// 
 /// ## params
-/// vec1 : the first vec to combine
-/// vec2 : the second vec to combine
-/// exclude_dupes : whether or not we should exclude duplicates.
+/// vec1 : the first vec to combine  
 /// 
-/// ## returns
+/// vec2 : the second vec to combine  
+/// 
+/// exclude_dupes : whether or not we should exclude duplicates.  
+/// 
+/// ## return
 /// Returns a new vec of type T with all elements of vec1 and vec2.
 fn combine_two_vecs<T: Clone + std::cmp::PartialEq>(vec1:&Vec<T>, vec2:&Vec<T>, exclude_dupes:bool) -> Vec<T> {
 	let mut new_vec = vec1.clone();
@@ -490,6 +493,36 @@ fn combine_two_vecs<T: Clone + std::cmp::PartialEq>(vec1:&Vec<T>, vec2:&Vec<T>, 
 
 	return new_vec;
 }//end combine_two_vecs<T>(vec1, vec2, exclude_dupes)
+
+/// # merge_two_vec<T>(vec1, vec2)
+/// 
+/// Interlaces two parallel vectors such that for each index n, new_vec[n] = (vec1[n], vec2[n])  
+/// 
+/// This function will panic if vec1 and vec2 are not the same length
+/// 
+/// ## params
+/// vec1 : the first vector to merge  
+/// 
+/// vec2 : the second vector to merge
+/// 
+/// # return
+/// Returns a new vector such that for each index n, new_vec[n] = (vec1[n], vec2[n])
+#[allow(dead_code)]
+fn merge_two_vecs<T: Clone>(vec1:&Vec<T>, vec2:&Vec<T>) -> Vec<(T, T)> {
+	// handle case of non-parallel vecs
+	if vec1.len() != vec2.len() {
+		panic!("Vecs are not parallel!");
+	}//end if vecs not same length
+
+	// get into our little function
+	let mut new_vec = Vec::new();
+
+	for i in 0..vec1.len() {
+		new_vec.push((vec1.get(i).unwrap().clone(), vec2.get(i).unwrap().clone()));
+	}//end looping over each index in both vectors
+
+	return new_vec;
+}//end merge_two_vecs<T>(vec1, vec2)
 
 /// # BoardSpot
 /// 
