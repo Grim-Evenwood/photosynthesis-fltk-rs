@@ -401,18 +401,85 @@ impl Board {
 	/// Each element in grid of booleans says whether that spot is in shadow from the sun.  
 	/// 
 	/// So, if true, then it is shaded from the sun, and if false, then it does get sunlight.
+	/// 
+	/// ## Assumptions
+	/// 
+	/// This function makes some assumptions about the board. Namely, it assumes that the number of rows and columns are both small enough to be expressed as an i8.
+	/// 
+	/// ## Return
+	/// 
+	/// This function returns a grid of booleans parallel to self.board. It should be noted, that if a spot would be in shadow, but that spot holds a tree taller than the shadow, such that the tree should still provide light points, then the returned grid will state that that spot is not in shadow. This only happens for trees though. This is done so that one can easily check using this method whether a tree should receive light points or whether a random spot on the board is in shadow for seed planting or tree upgrading purposes.
 	pub fn sun_shaded(&self) -> Grid<bool> {
 		// instantiate parallel grid
 		let mut is_shaded: Grid<bool> = Grid::new(self.board.rows(), self.board.cols());
 		is_shaded.fill(false);
 
-		// TODO: Figure out whether each position is shaded
 		// set some reference variables TBD by sun position
 		let start_and_direction = Board::sun_grid_starts_directions(self.sun.direction, self.board.rows(), self.board.cols());
-		let mut row_starts: Vec<usize> = start_and_direction.0;
-		let mut col_starts: Vec<usize> = start_and_direction.1;
-		let mut row_col_direction: (i8, i8) = start_and_direction.2;
-		
+		let row_starts: Vec<usize> = start_and_direction.0;
+		let col_starts: Vec<usize> = start_and_direction.1;
+		let row_col_direction: (i8, i8) = start_and_direction.2;
+		let row_col_starts = merge_two_vecs(&row_starts, &col_starts);
+
+		// sanity check to prevent infinite loop
+		if row_col_direction.0 == 0 && row_col_direction.1 == 0 {
+			// this should never happen, but if it does, it will prevent infinite loop
+			panic!("Direction for row and column cannot be to not move.");
+		}//end if direction indicates no movement at all
+
+		// set up loop and start going through things
+		for row_col in row_col_starts {
+			// each row_col start is like it's own column of light, process each individually
+			// need to loop from start, apply row_col_direction, and then if valid, check for tree in inner loop. Only apply shadow in inner loop for each tree
+			let mut cur_row = row_col.0 as i8;
+			let mut cur_col = row_col.1 as i8;
+			let mut shadow_size_left: Vec<(usize, usize)> = Vec::new();
+			loop {
+				// get the board element at this row_col
+				let this_spot = self.board.get(cur_row as usize, cur_col as usize).unwrap();
+				
+				// test for any objects which would cast a shadow
+				let maybe_this_tree = this_spot.tree;
+				let is_great_elder_tree = this_spot.piece_type == PieceType::GreatElderTree;
+				let is_moonstone = this_spot.piece_type == PieceType::Moonstone;
+				
+				// apply shadows of normal trees
+				if let Some(tree) = maybe_this_tree {
+					// add shadow of tree to our funky little Vec
+					shadow_size_left.push((tree.size.size(), tree.size.size()));
+				}//end if we have a tree to add a shadow to
+				// apply shadows of great elder tree, if detected
+				if is_great_elder_tree {
+					shadow_size_left.push((4,self.board.rows() + self.board.cols()));
+				}//end if we have a great elder tree here
+				if is_moonstone {
+					shadow_size_left.push((1,1));
+				}//end if we have a moonstone
+
+				// run through shadow vec to determine if this tree is in shadow
+				for shadow in &mut shadow_size_left {
+					// if tree here, check if shadow big enough. Else, set shadowed if not great elder tree
+					if (maybe_this_tree.is_some() && shadow.0 >= maybe_this_tree.unwrap().size.size()) || (maybe_this_tree.is_none() && !is_great_elder_tree) {
+						// set this spot as shaded
+						*is_shaded.get_mut(cur_row as usize, cur_col as usize).unwrap() = true;
+						// spot already shaded, but don't break, because we need to decrement the other shadows
+					}//end if shadow from big enough object
+					// decrement the number of tiles left this shadow covers
+					shadow.1 -= 1;
+				}//end checking for any valid shadows on this spot
+
+				// check if next change would be in bounds
+				let row_too_sml = cur_row == 0 && row_col_direction.0 < 0;
+				let row_too_big = cur_row == self.board.rows() as i8 - 1 && row_col_direction.0 > 0;
+				let col_too_sml = cur_col == 0 && row_col_direction.1 < 0;
+				let col_too_big = cur_col == self.board.cols() as i8 - 1 && row_col_direction.1 > 0;
+				// update current row and column for next iteration if in bounds
+				if !row_too_sml && !row_too_big && !col_too_sml && !col_too_big {
+					cur_row += row_col_direction.0;
+					cur_col += row_col_direction.1;
+				}//end if we're in bounds for next operation
+			}//end looping until we hit an invalid index
+		}//end looping over the row_col coord starts
 
 		// return updated grid
 		return is_shaded;
