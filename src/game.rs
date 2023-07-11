@@ -429,7 +429,6 @@ impl Board {
 
 		// set up loop and start going through things
 		for row_col in row_col_starts {
-			// each row_col start is like it's own column of light, process each individually
 			// need to loop from start, apply row_col_direction, and then if valid, check for tree in inner loop. Only apply shadow in inner loop for each tree
 			let mut cur_row = row_col.0 as i8;
 			let mut cur_col = row_col.1 as i8;
@@ -485,22 +484,145 @@ impl Board {
 		return is_shaded;
 	}//end sun_shaded(&self)
 
-	/// # moon_shaded(&self)
+	/// # moon_grid_starts_directions(direction, rows, cols)
+	/// 
+	/// Helper method for board.moon_shaded().
+	/// 
+	/// Returns an abomination of a tuple. This function has four (kinda 8 tbh) things to return, so it just throws them all into a tuple.
+	/// 
+	/// ## parameters
+	/// moon : the moon we're working with
+	/// rows : number of rows in current board
+	/// cols : number of cols in current board
+	/// 
+	/// ## return
+	/// Aside from the tuple, return has four things:
+	/// coord_1_start : The (row,col) coordinate to start the first coordinate at.
+	/// direction_1 : The (row,col) direction to go in when starting from coord_1_start.
+	/// coord_2_start : The (row,col) coordinate to start the second coordinate at.
+	/// direction_2 : The (row,col) direction to go in when starting from coord_2_start.
+	fn moon_grid_starts_directions(moon: &Moon) -> ((usize,usize),(i8,i8),(usize,usize),(i8,i8)) {
+		let coord_1_start: (usize,usize) = (moon.row1, moon.col1);
+		let coord_2_start: (usize,usize) = (moon.row2, moon.col2);
+		let direction_1: (i8,i8);
+		let direction_2: (i8,i8);
+
+		// set direction based on moon direction
+		match moon.direction {
+			MoonDirection::North => {
+				// left and up
+				direction_1 = (-1,-1);
+				// right and up
+				direction_2 = (-1,1);
+			}, MoonDirection::East => {
+				// up and right
+				direction_1 = (-1,1);
+				// down and right
+				direction_2 = (1,1);
+			}, MoonDirection::South => {
+				// right and down
+				direction_1 = (1,1);
+				// left and down
+				direction_2 = (1,-1);
+			}, MoonDirection::West => {
+				// down and left
+				direction_1 = (1,-1);
+				// up and left
+				direction_2 = (-1,-1); },
+		}//end matching direction
+
+		return (coord_1_start, direction_1, coord_2_start, direction_2);
+	}//end moon_grid_starts_directions(direction, rows, cols)
+
+	/// # moon_lit(&self)
 	/// 
 	/// Function returns parallel grid of booleans.  
 	/// 
-	/// Each element in grid of booleans says whether that spot is in shadow from the moon.
+	/// Each element in grid of booleans says whether that spot is lit by the moon.
 	/// 
-	/// So, if true, then it is shaded from the moon, and if false, then it does get moonlight.
-	pub fn moon_shaded(&self) -> Grid<bool> {
+	/// So, if true, then it is lit by the moon, and if false, then it receives no moonlight.
+	pub fn moon_lit(&self) -> Grid<bool> {
 		// instantiate parallel grid
-		let mut is_shaded: Grid<bool> = Grid::new(self.board.rows(), self.board.cols());
-		is_shaded.fill(false);
+		let mut is_lit: Grid<bool> = Grid::new(self.board.rows(), self.board.cols());
+		is_lit.fill(false);
 
-		// TODO: Figure out whether each position is shaded
+		// figure a few things out real quick using a helper method
+		let moon_starts_and_directions = Board::moon_grid_starts_directions(&self.moon);
+		let coord_1_start = moon_starts_and_directions.0;
+		let direction_1 = moon_starts_and_directions.1;
+		let coord_2_start = moon_starts_and_directions.2;
+		let direction_2 = moon_starts_and_directions.3;
+		let mut janky_vec: Vec<((usize,usize),(i8,i8))> = Vec::new();
+		janky_vec.push((coord_1_start, direction_1));
+		janky_vec.push((coord_2_start, direction_2));
+		
+		// go through and do stuff for each start and direction
+		for start_direction in janky_vec {
+			// pull our references out of the iterator var
+			let start = start_direction.0;
+			let direction = start_direction.1;
+
+			let mut cur_row = start.0;
+			let mut cur_col = start.1;
+			// let shadow_size_left: Vec<(usize,usize)> = Vec::new();
+			loop {
+				// get the board element at this row_col
+				let this_spot = self.board.get(cur_row, cur_col).unwrap();
+
+				// test for any objeccts which would cast a shadow
+				// cast giant shadow for great elder tree
+				if this_spot.piece_type == PieceType::GreatElderTree {
+					break;
+				}//end if everything after this is in shadow
+				if this_spot.piece_type == PieceType::Moonstone {
+					// Get list of adjacent spot, shine light on them, check for more adjacent in loop
+					let mut adjacents_queue_index = 0;
+					let mut adjacents_queue: Vec<(usize,usize)> = get_adjacent_coords(cur_row, cur_col, self.board.rows() - 1, self.board.cols() - 1, true);
+					while adjacents_queue_index < adjacents_queue.len() {
+						// set ref variable
+						let coord = adjacents_queue.get(adjacents_queue_index).unwrap().clone();
+						// figure out the spot for this position
+						let this_this_spot = self.board.get(coord.0, coord.1).unwrap();
+						
+						// check some stuff for later iterations
+						if this_this_spot.piece_type == PieceType::Moonstone {
+							// get adjacents and add them if adjacents_queue doesn't contain them
+							let these_adjacents = get_adjacent_coords(coord.0, coord.1, self.board.rows() - 1, self.board.cols() - 1, true);
+							for this_adjacent in these_adjacents {
+								if !adjacents_queue.contains(&this_adjacent) {
+									adjacents_queue.push(this_adjacent);
+								}//end if adjacents_queue doesn't already contain this_adjacent
+							}//end adding to adjacents_queue maybe
+						}//end if we need to shine on adjacent spots
+
+						// get reference for whether this spot is lit
+						let this_lit_spot = is_lit.get_mut(coord.0, coord.1).unwrap();
+						*this_lit_spot = true;
+
+						// update for later iterations
+						adjacents_queue_index += 1;
+					}//end looping over each coord
+				}//end if we need to shine onto adjacent spaces
+				else {
+					// set this spot as moon-lit
+					*is_lit.get_mut(cur_row as usize, cur_col as usize).unwrap() = true;
+				}//end else we can make this moon-lit
+
+				// check if next change would be in bounds
+				let row_too_sml = cur_row == 0 && direction.0 < 0;
+				let row_too_big = cur_row == self.board.rows() - 1 && direction.0 > 0;
+				let col_too_sml = cur_col == 0 && direction.1 < 0;
+				let col_too_big = cur_col == self.board.cols() - 1 && direction.1 > 0;
+				// update current row and column for next iteration if in bounds
+				if !row_too_sml && !row_too_big && !col_too_sml && !col_too_big {
+					cur_row = (cur_row as i8 + direction.0) as usize;
+					cur_col = (cur_col as i8 + direction.1) as usize;
+				}//end if we're in bounds for next operation
+			}//end looping until we finish getting shadows figured out
+		}//end looping over starts and directions
 
 		// return updated grid
-		return is_shaded;
+		return is_lit;
 	}//end moon_shaded(&self)
 }//end impl for Board
 
@@ -513,6 +635,55 @@ impl Default for Board {
 		}//end struct construction
     }//end default()
 }//end impl Default for Board
+
+/// # get_adjacent_coords(&self, max_row, max_col)
+/// 
+/// This function generates a list of coordinates that are adjacent to this grouping. The maximum row and column index are required in parameters. 
+/// This function will automatically exclude coordinates that are already apart of this grouping or that would be out of bounds.
+pub fn get_adjacent_coords(row: usize, col: usize, max_row: usize, max_col: usize, allow_diagonal: bool) -> Vec<(usize,usize)> {
+	let mut adjacents = Vec::new();
+	// top left
+	if row > 0 && col > 0 && allow_diagonal {
+		let top_left = (row - 1, col - 1);
+		adjacents.push(top_left);
+	}//end if this coordinate is in bounds
+	// top
+	if row > 0 {
+		let top = (row - 1,col);
+		adjacents.push(top);
+	}//end if this coordinate is in bounds
+	// top right
+	if row > 0 && col < max_col && allow_diagonal {
+		let top_right = (row - 1,col + 1);
+		adjacents.push(top_right);
+	}//end if this coordinate is in bounds
+	// mid left
+	if col > 0 {
+		let mid_left = (row, col - 1);
+		adjacents.push(mid_left);
+	}//end if this coordinate is in bounds
+	// mid right
+	if col < max_col {
+		let mid_right = (row, col + 1);
+		adjacents.push(mid_right);
+	}//end if this coordinate is in bounds
+	// bottom left
+	if row < max_row && col > 0 && allow_diagonal {
+		let bot_left = (row + 1, col - 1);
+		adjacents.push(bot_left);
+	}//end if this coordinate is in bounds
+	// bottom
+	if row < max_row {
+		let bot = (row + 1, col);
+		adjacents.push(bot);
+	}//end if this coordinate is in bounds
+	// bottom right
+	if row < max_row && col < max_col && allow_diagonal {
+		let bot_right = (row + 1, col + 1);
+		adjacents.push(bot_right);
+	}//end if this coordinate is in bounds
+	return adjacents;
+}//end get_adjacent_coords()
 
 /// # fill_new_vec<T>(n:usize,value:T)
 /// 
