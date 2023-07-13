@@ -358,6 +358,7 @@ impl GUI {
 			"Buy:Large".to_string()
 		);
 
+		self.availible_trees.set_text("These are the available trees");
 	}//end update_tree_lists(self, to_buy, available)
 }//end impl for GUI
 
@@ -446,6 +447,8 @@ impl FlexGrid {
 				}//end if button wasn't deleted
 				else {println!("button was deleted, row {}", row_idx);}
 			}//end adding each button in row to inner flex
+			this_inner_flex.end();
 		}//end looping over each inner flex and adding buttons
+		self.outer_flex.end();
 	}//end fill_flex
 }//end impl for FlexGrid
