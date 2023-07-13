@@ -290,7 +290,7 @@ impl GUI {
 	pub fn initialize_tree_lists(&mut self, to_buy: Vec<Tree>, available: Vec<Tree>) {
 		// action buttons
 		self.buying_trees_choice = Choice::default()
-			.with_size(120,30)
+			.with_size(135,30)
 			.with_pos(100, 175)
 			.with_label("Items to buy");
 		self.update_tree_lists(to_buy, available);
@@ -299,7 +299,7 @@ impl GUI {
 		self.main_window.add(&self.buying_trees_choice);
 
 		let mut txt7 = TextDisplay::default()
-			.with_size(120,100)
+			.with_size(135,100)
 			.below_of(&self.buying_trees_choice,100)
 			.with_label("Available Area")
 			.with_align(Align::LeftTop);
