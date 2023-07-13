@@ -3,7 +3,7 @@ use grid::Grid;
 use fltk_theme::WidgetScheme;
 use fltk_theme::SchemeType;
 use fltk_theme::widget_themes;
-use crate::{Board, game::Fertility};
+use crate::{Board, game::{Fertility, Tree}};
 
 pub struct GUI {
 	/// application everything runs inside of 
@@ -276,8 +276,14 @@ impl GUI {
 		self.board_flex_grid.outer_flex.set_pos(get_default_win_width() - get_default_grid_width() - 100, 175);
 		self.main_window.add(&self.board_flex_grid.outer_flex);
 		self.board_flex_grid.outer_flex.recalc();
-
 	}//end initialize_board(&mut self, board)
+
+	/// # initialize_tree_lists(self, to_buy, available)
+	/// 
+	/// Takes list of trees which are to buy or available and initializes menu elements and lists.
+	pub fn initialize_tree_lists(&mut self, to_buy: Vec<Tree>, available: Vec<Tree>) {
+		todo!();
+	}//end initialize_tree_lists(self, to_buy, available)
 }//end impl for GUI
 
 fn get_default_win_width() -> i32 {1000}

@@ -856,7 +856,7 @@ impl Default for BoardSpot {
 /// # Tree
 /// 
 /// Represents a single tree on the board.
-pub(crate) struct Tree {
+pub struct Tree {
 	/// The color of this particular tree. The color denotes the owner of the tree.
 	pub(crate) color:(u8,u8,u8),
 	/// The size of the tree.
