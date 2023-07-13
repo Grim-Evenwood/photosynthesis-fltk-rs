@@ -224,7 +224,6 @@ impl GUI {
 	/// 
 	pub fn initialize_board(&mut self, board_state:&Board) {
 		/*
-		TODO: Finish this method. 
 		Maybe look to button_grid_test for example of creating grid of buttons
 		and displaying it in a FlexGrid.
 		*/
@@ -261,7 +260,6 @@ impl GUI {
 
 		// make flex show up 
 		flex.outer_flex.set_pos(get_default_win_width() - get_default_grid_width() - 100, 175);
-		println!("width:{} height:{}", flex.outer_flex.width(), flex.outer_flex.height());
 		self.main_window.add(&flex.outer_flex);
 		flex.outer_flex.recalc();
 
