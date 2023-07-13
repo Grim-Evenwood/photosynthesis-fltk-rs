@@ -5,7 +5,7 @@ use std::fmt::Display;
 #[doc = r"# PieceType
 This enum represents the type of piece that might be placed on a board,
 such that each type would need to be handled differently."]
-pub enum PieceType {
+pub(crate) enum PieceType {
     Empty,
     Tree,
     Animal,
@@ -38,7 +38,7 @@ impl Display for PieceType {
 #[doc = r"# Animal
 This enum represents the type of forest animal.
 Each forest animal has its own special ability to be used by the owning player."]
-pub enum Animal {
+pub(crate) enum Animal {
     Boar,
     Hedgehog,
     Squirrel,
@@ -69,7 +69,7 @@ impl Display for Animal {
 #[doc = r"# TreeSize
 This enum represents the size of a tree.
 Note that for game purposes, a seed counts as a tree, and is the smallest size."]
-pub enum TreeSize {
+pub(crate) enum TreeSize {
     Seed,
     Small,
     Medium,
@@ -158,7 +158,7 @@ pub(crate) trait MovingLightDirection {
 #[derive(Debug, PartialEq, Eq, Copy, Clone, Ord, PartialOrd, Hash)]
 #[doc = r"# LightDirection
 This enum represents the direction that the sun light is pointing towards."]
-pub enum SunDirection {
+pub(crate) enum SunDirection {
     North,
     Northeast,
     East,

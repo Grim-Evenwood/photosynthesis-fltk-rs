@@ -4,7 +4,7 @@ mod enums;
 
 #[derive(Debug, PartialEq, Eq, Copy, Clone, Ord, PartialOrd, Hash)]
 pub struct Sun {
-	direction: SunDirection,
+	pub(crate) direction: SunDirection,
 }//end struct Sun
 
 #[allow(dead_code)]
@@ -12,7 +12,7 @@ impl Sun {
 	/// # new(direction)
 	/// 
 	/// Instantiates a new Sun object with a given direction to start.
-	pub fn new(direction: SunDirection) -> Sun {
+	pub(crate) fn new(direction: SunDirection) -> Sun {
 		Sun {
 			direction,
 		}//end struct construction
@@ -50,12 +50,12 @@ impl Default for Sun {
 #[allow(dead_code)]
 #[derive(Debug, PartialEq, Eq, Copy, Clone, Ord, PartialOrd, Hash)]
 pub struct Moon {
-	pub direction: MoonDirection,
-	pub row1: usize,
-	pub col1: usize,
-	pub row2: usize,
-	pub col2: usize,
-	pub full_moon: bool,
+	pub(crate) direction: MoonDirection,
+	pub(crate) row1: usize,
+	pub(crate) col1: usize,
+	pub(crate) row2: usize,
+	pub(crate) col2: usize,
+	pub(crate) full_moon: bool,
 	grid_side_length: usize,
 }//end struct Moon
 
@@ -222,11 +222,11 @@ impl Moon {
 #[derive(Debug, PartialEq, Eq, Clone)]
 pub struct Board {
 	/// the grid that represents the game board
-	pub board:Grid<BoardSpot>,
+	pub(crate) board:Grid<BoardSpot>,
 	/// the object representing the sun
-	pub sun: Sun,
+	pub(crate) sun: Sun,
 	/// the object representing the moon
-	pub moon: Moon,
+	pub(crate) moon: Moon,
 }//end struct Board
 
 #[allow(dead_code)]
@@ -409,7 +409,7 @@ impl Board {
 	/// ## Return
 	/// 
 	/// This function returns a grid of booleans parallel to self.board. It should be noted, that if a spot would be in shadow, but that spot holds a tree taller than the shadow, such that the tree should still provide light points, then the returned grid will state that that spot is not in shadow. This only happens for trees though. This is done so that one can easily check using this method whether a tree should receive light points or whether a random spot on the board is in shadow for seed planting or tree upgrading purposes.
-	pub fn sun_shaded(&self) -> Grid<bool> {
+	pub(crate) fn sun_shaded(&self) -> Grid<bool> {
 		// instantiate parallel grid
 		let mut is_shaded: Grid<bool> = Grid::new(self.board.rows(), self.board.cols());
 		is_shaded.fill(false);
@@ -541,7 +541,7 @@ impl Board {
 	/// Each element in grid of booleans says whether that spot is lit by the moon.
 	/// 
 	/// So, if true, then it is lit by the moon, and if false, then it receives no moonlight.
-	pub fn moon_lit(&self) -> Grid<bool> {
+	pub(crate) fn moon_lit(&self) -> Grid<bool> {
 		// instantiate parallel grid
 		let mut is_lit: Grid<bool> = Grid::new(self.board.rows(), self.board.cols());
 		is_lit.fill(false);
@@ -640,7 +640,7 @@ impl Default for Board {
 /// 
 /// This function generates a list of coordinates that are adjacent to this grouping. The maximum row and column index are required in parameters. 
 /// This function will automatically exclude coordinates that are already apart of this grouping or that would be out of bounds.
-pub fn get_adjacent_coords(row: usize, col: usize, max_row: usize, max_col: usize, allow_diagonal: bool) -> Vec<(usize,usize)> {
+pub(crate) fn get_adjacent_coords(row: usize, col: usize, max_row: usize, max_col: usize, allow_diagonal: bool) -> Vec<(usize,usize)> {
 	let mut adjacents = Vec::new();
 	// top left
 	if row > 0 && col > 0 && allow_diagonal {
@@ -768,23 +768,23 @@ fn merge_two_vecs<T: Clone>(vec1:&Vec<T>, vec2:&Vec<T>) -> Vec<(T, T)> {
 /// 
 /// This information is held through a combination of enums and options.
 #[derive(Debug, PartialEq, Eq, Copy, Clone, Ord, PartialOrd, Hash)]
-pub struct BoardSpot {
+pub(crate) struct BoardSpot {
 	/// # piece_type
 	/// 
 	/// The type of piece that this object represents.  
 	/// 
 	/// Quite important for handling how this piece operates.
-	pub piece_type: PieceType,
+	pub(crate) piece_type: PieceType,
 	/// # tree
 	/// 
 	/// The tree present at this spot on the board, if there is one.
-	pub tree: Option<Tree>,
+	pub(crate) tree: Option<Tree>,
 	/// # animal
 	/// 
 	/// The type of forest animal that might be on this spot.  
 	/// 
 	/// Forest animals cannot move onto the same spot as another animal, a moonstone, or the great elder tree.
-	pub animal: Option<Animal>,
+	pub(crate) animal: Option<Animal>,
 	/// # fertility
 	/// 
 	/// The fertility level of this particular spot.  
@@ -798,7 +798,7 @@ pub struct BoardSpot {
 	/// An spot on the board from which as action has been taken is expended.  
 	/// 
 	/// If a spot is expended, you can't use it for anything else until the next turn.
-	expended: bool,
+	pub(crate) expended: bool,
 }//end struct BoardSpot
 
 #[allow(dead_code)]
@@ -856,11 +856,11 @@ impl Default for BoardSpot {
 /// # Tree
 /// 
 /// Represents a single tree on the board.
-pub struct Tree {
+pub(crate) struct Tree {
 	/// The color of this particular tree. The color denotes the owner of the tree.
-	color:(u8,u8,u8),
+	pub(crate) color:(u8,u8,u8),
 	/// The size of the tree.
-	size:TreeSize,
+	pub(crate) size:TreeSize,
 }//end struct Tree
 
 impl Default for Tree {
