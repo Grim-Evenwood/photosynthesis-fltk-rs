@@ -290,11 +290,26 @@ impl GUI {
 			.with_size(120,30)
 			.with_pos(100, 175)
 			.with_label("Items to buy");
-		self.buying_trees_choice.add_choice("Seed|Small Tree|Medium Tree|Large Tree");
+		self.update_tree_lists(to_buy, available);
 		self.buying_trees_choice.set_color(Color::from_rgb(56, 118, 29));
 		self.buying_trees_choice.set_text_color(Color::White);
 		self.main_window.add(&self.buying_trees_choice);
 	}//end initialize_tree_lists(self, to_buy, available)
+
+	pub fn update_tree_lists(&mut self, to_buy: Vec<Tree>, available: Vec<Tree>) {
+		// clear any previous options
+		self.buying_trees_choice.clear();
+
+		let num_small_trees = 3;
+
+		self.buying_trees_choice.add_emit(
+			format!("Small Tree ({})", num_small_trees).as_str(), 
+			Shortcut::None, 
+			menu::MenuFlag::Normal, 
+			self.msg_sender.clone(),
+			"Buy:SmallTree".to_string()
+		);
+	}//end update_tree_lists(self, to_buy, available)
 }//end impl for GUI
 
 fn get_default_win_width() -> i32 {1000}
