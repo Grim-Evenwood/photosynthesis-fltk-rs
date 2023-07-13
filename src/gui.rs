@@ -30,6 +30,7 @@ pub struct GUI {
 	pub buying_trees_choice:Choice,
 	/// menu for availibe trees
 	pub availible_trees:TextBuffer,
+	pub available_trees_display:TextDisplay,
 }//end struct GUI
 
 impl Default for GUI {
@@ -51,6 +52,7 @@ impl Default for GUI {
 			board_flex_grid:FlexGrid::default(),
 			buying_trees_choice:Choice::default(),
 			availible_trees:TextBuffer::default(),
+			available_trees_display:TextDisplay::default(),
 		}//end struct construction
 	}//end default()
 }//end impl Default for GUI
@@ -298,14 +300,14 @@ impl GUI {
 		self.buying_trees_choice.set_text_color(Color::White);
 		self.main_window.add(&self.buying_trees_choice);
 
-		let mut txt7 = TextDisplay::default()
+		self.available_trees_display = TextDisplay::default()
 			.with_size(135,100)
 			.below_of(&self.buying_trees_choice,100)
 			.with_label("Available Area")
 			.with_align(Align::LeftTop);
 
-		txt7.set_buffer(self.availible_trees.clone());
-		txt7.set_color(Color::from_rgb(147, 196, 125))
+		self.available_trees_display.set_buffer(self.availible_trees.clone());
+		self.available_trees_display.set_color(Color::from_rgb(147, 196, 125))
 	}//end initialize_tree_lists(self, to_buy, available)
 
 	pub fn update_tree_lists(&mut self, to_buy: Vec<Tree>, available: Vec<Tree>) {
@@ -358,7 +360,11 @@ impl GUI {
 			"Buy:Large".to_string()
 		);
 
-		self.availible_trees.set_text("These are the available trees");
+		let mut available_text = "".to_string();
+		for avai in available {
+			available_text += format!("{}\n", avai.size).as_str();
+		}//end looping over available trees
+		self.availible_trees.set_text(&available_text);
 	}//end update_tree_lists(self, to_buy, available)
 }//end impl for GUI
 
