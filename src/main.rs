@@ -1,7 +1,7 @@
 mod gui;
 use crate::gui::GUI;
 mod game;
-use game::{Board, Tree};
+use game::{Board, Tree, TreeSize};
 
 /// # main
 /// method where program starts
@@ -58,6 +58,15 @@ fn main() {
 				let comma_split_second: usize = comma_split.get(1).unwrap().parse().unwrap();
 				println!("Received test msg from the test button grid. Row:{}, Col:{}", comma_split_first, comma_split_second);
 			}//end if ffirst four chars are "test"
+			else if val.starts_with("Buy") {
+				let tree_size_to_buy: TreeSize= match val.split(':').collect::<Vec<&str>>().get(1).unwrap() {
+					&"Seed" => TreeSize::Seed,
+					&"Small" => TreeSize::Small,
+					&"Medium" => TreeSize::Medium,
+					&"Large" => TreeSize::Large,
+					_ => panic!("Tree size not recognized"),
+				};
+			}//end if user wants to buy a tree from to-buy list
 		}//end if we got a message
 	}//end application loop
 }//end main method
