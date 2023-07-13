@@ -1,4 +1,4 @@
-use fltk::{window::Window, app::{App, Receiver, Sender, self}, prelude::{WidgetExt, GroupExt, WidgetBase, MenuExt, DisplayExt}, enums::{Color, Align, Shortcut}, button::Button, group::{Flex, self}, menu::{SysMenuBar, self}, text::{TextEditor, TextBuffer, self, TextDisplay}};
+use fltk::{window::Window, app::{App, Receiver, Sender, self}, prelude::{WidgetExt, GroupExt, WidgetBase, MenuExt, DisplayExt}, enums::{Color, Align, Shortcut}, button::Button, group::{Flex, self}, menu::{SysMenuBar, self, Choice}, text::{TextEditor, TextBuffer, self, TextDisplay}};
 use grid::Grid;
 use fltk_theme::WidgetScheme;
 use fltk_theme::SchemeType;
@@ -26,6 +26,8 @@ pub struct GUI {
 	pub lunar_pts:TextBuffer,
 	/// UI GUI board display
 	pub board_flex_grid:FlexGrid,
+	/// menu for buying trees
+	pub buying_trees_choice:Choice,
 }//end struct GUI
 
 impl Default for GUI {
@@ -45,6 +47,7 @@ impl Default for GUI {
 			light_pts:TextBuffer::default(),
 			lunar_pts:TextBuffer::default(),
 			board_flex_grid:FlexGrid::default(),
+			buying_trees_choice:Choice::default(),
 		}//end struct construction
 	}//end default()
 }//end impl Default for GUI
@@ -282,7 +285,14 @@ impl GUI {
 	/// 
 	/// Takes list of trees which are to buy or available and initializes menu elements and lists.
 	pub fn initialize_tree_lists(&mut self, to_buy: Vec<Tree>, available: Vec<Tree>) {
-		todo!();
+		// action buttons
+		self.buying_trees_choice = Choice::default()
+			.with_size(100,30)
+			.left_of(&self.board_flex_grid.outer_flex, 100)
+			.with_label("Trees to buy");
+		self.buying_trees_choice.add_choice("Seed|Small Tree|Medium Tree|Large Tree");
+		self.buying_trees_choice.set_color(Color::from_rgb(56, 118, 29));
+		self.main_window.add(&self.buying_trees_choice);
 	}//end initialize_tree_lists(self, to_buy, available)
 }//end impl for GUI
 
