@@ -1,4 +1,4 @@
-use fltk::{window::Window, app::{App, Receiver, Sender, self}, prelude::{WidgetExt, GroupExt, WidgetBase, MenuExt, DisplayExt}, enums::{Color, Align, Shortcut}, button::Button, group::{Flex, self}, menu::{SysMenuBar, self}, text::{TextEditor, TextBuffer, self}};
+use fltk::{window::Window, app::{App, Receiver, Sender, self}, prelude::{WidgetExt, GroupExt, WidgetBase, MenuExt, DisplayExt}, enums::{Color, Align, Shortcut}, button::Button, group::{Flex, self}, menu::{SysMenuBar, self}, text::{TextEditor, TextBuffer, self, TextDisplay}};
 use grid::Grid;
 use fltk_theme::WidgetScheme;
 use fltk_theme::SchemeType;
@@ -15,7 +15,15 @@ pub struct GUI {
 	/// receives messages for events
 	pub msg_receiver:Receiver<String>,
 	/// menu bar
-	pub menu:SysMenuBar
+	pub menu:SysMenuBar,
+	/// info bar turn count
+	pub turn_count:TextBuffer,
+	/// info bar player points 
+	pub player_points:TextBuffer,
+	/// info bar light points
+	pub light_pts:TextBuffer,
+	/// info bar lunar points 
+	pub lunar_pts:TextBuffer,
 }//end struct GUI
 
 impl Default for GUI {
@@ -29,7 +37,11 @@ impl Default for GUI {
 			main_window: Window::default(),
 			msg_sender: s,
 			msg_receiver: r,
-			menu:SysMenuBar::default()
+			menu:SysMenuBar::default(),
+			turn_count:TextBuffer::default(),
+			player_points:TextBuffer::default(),
+			light_pts:TextBuffer::default(),
+			lunar_pts:TextBuffer::default(),
 		}//end struct construction
 	}//end default()
 }//end impl Default for GUI
@@ -83,20 +95,11 @@ impl GUI {
 			.with_size(get_default_txt_width(),get_default_txt_height())
 			.with_label("End Turn")
 			.right_of(&txt5, get_default_txt_padding());	
-		
-		let mut buf1 = TextBuffer::default();
-		buf1.set_text("txt");
-		let mut buf2 = TextBuffer::default();
-		buf2.set_text("txt");
-		let mut buf3 = TextBuffer::default();
-		buf3.set_text("txt");
-		let mut buf4 = TextBuffer::default();
-		buf4.set_text("txt");
 
-		txt1.set_buffer(buf1.clone());
-		txt2.set_buffer(buf2.clone());
-		txt3.set_buffer(buf3.clone());
-		txt4.set_buffer(buf4.clone());
+		txt1.set_buffer(self.turn_count.clone());
+		txt2.set_buffer(self.player_points.clone());
+		txt3.set_buffer(self.light_pts.clone());
+		txt4.set_buffer(self.lunar_pts.clone());
 		txt5.set_frame(widget_themes::OS_SPACER_THIN_DOWN_BOX);
 		txt5.set_color(Color::from_rgb(68,140,184));
 		txt6.set_frame(widget_themes::OS_SPACER_THIN_DOWN_BOX);
