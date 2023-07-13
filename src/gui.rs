@@ -28,6 +28,8 @@ pub struct GUI {
 	pub board_flex_grid:FlexGrid,
 	/// menu for buying trees
 	pub buying_trees_choice:Choice,
+	/// menu for availibe trees
+	pub availible_trees:TextBuffer,
 }//end struct GUI
 
 impl Default for GUI {
@@ -48,6 +50,7 @@ impl Default for GUI {
 			lunar_pts:TextBuffer::default(),
 			board_flex_grid:FlexGrid::default(),
 			buying_trees_choice:Choice::default(),
+			availible_trees:TextBuffer::default(),
 		}//end struct construction
 	}//end default()
 }//end impl Default for GUI
@@ -295,7 +298,14 @@ impl GUI {
 		self.buying_trees_choice.set_text_color(Color::White);
 		self.main_window.add(&self.buying_trees_choice);
 
-		
+		let mut txt7 = TextDisplay::default()
+			.with_size(120,100)
+			.below_of(&self.buying_trees_choice,100)
+			.with_label("Available Area")
+			.with_align(Align::LeftTop);
+
+		txt7.set_buffer(self.availible_trees.clone());
+		txt7.set_color(Color::from_rgb(147, 196, 125))
 	}//end initialize_tree_lists(self, to_buy, available)
 
 	pub fn update_tree_lists(&mut self, to_buy: Vec<Tree>, available: Vec<Tree>) {
