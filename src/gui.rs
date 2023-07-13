@@ -244,7 +244,7 @@ impl GUI {
 					new_button.set_label("");
 				}// end if button is too small
 
-				new_button.set_color(Color::Green);
+				new_button.set_color(Color::from_rgb(50, 168, 82));
 
 				// add buttton click event
 				new_button.emit(self.msg_sender.clone(), format!("uwu board:{},{}", row, col));
@@ -260,7 +260,7 @@ impl GUI {
 		flex.fill_flex(&board);
 
 		// make flex show up 
-		flex.outer_flex.set_pos(10, 100);
+		flex.outer_flex.set_pos(get_default_win_width() - get_default_grid_width() - 100, 175);
 		println!("width:{} height:{}", flex.outer_flex.width(), flex.outer_flex.height());
 		self.main_window.add(&flex.outer_flex);
 		flex.outer_flex.recalc();
@@ -272,8 +272,8 @@ fn get_default_win_width() -> i32 {1000}
 fn get_default_win_height() -> i32 {700}
 fn get_default_menu_height() -> i32 {30}
 fn get_default_tab_padding() -> i32 {0}
-fn get_default_grid_width() -> i32 {get_default_win_width()}
-fn get_default_grid_height() -> i32 {get_default_win_height()-get_default_menu_height() - get_default_tab_padding()}
+fn get_default_grid_width() -> i32 {get_default_win_width() - 400}
+fn get_default_grid_height() -> i32 {get_default_win_height()-get_default_menu_height() - get_default_tab_padding() - 225}
 fn get_max_grid_button_width() -> i32 {30}
 fn get_max_grid_button_height() -> i32 {15}
 fn get_default_txt_width() -> i32 {(get_default_win_width() / 6) - (get_default_txt_padding() * 3 / 2)}
