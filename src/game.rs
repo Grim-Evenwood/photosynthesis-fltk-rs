@@ -790,7 +790,7 @@ pub struct BoardSpot {
 	/// The fertility level of this particular spot.  
 	/// 
 	/// All locations have a fertility level, even if that fertility won't ever be used.
-	pub fertility: Fertility,
+	pub(crate) fertility: Fertility,
 	/// # expended
 	/// 
 	/// Whether or not this spot has been expended this turn.  
@@ -810,7 +810,7 @@ impl BoardSpot {
 	/// Fertility has no real default, so you must specify it.  
 	/// 
 	/// If you want to use the default Fertility of OneLeaf, use default().
-	pub fn new(fertility: Fertility) -> BoardSpot {
+	pub(crate) fn new(fertility: Fertility) -> BoardSpot {
 		BoardSpot { 
 			piece_type: Default::default(),
 			tree: None,
