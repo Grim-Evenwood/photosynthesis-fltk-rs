@@ -1,6 +1,6 @@
-use fltk::{window::Window, app::{App, Receiver, Sender, self}, prelude::{WidgetExt, GroupExt, WidgetBase, MenuExt, DisplayExt}, enums::{Color, Align, Shortcut}, button::{Button, self}, group::{Flex, self}, menu::{SysMenuBar, self}, text::{TextEditor, TextBuffer, self}};
+use fltk::{window::Window, app::{App, Receiver, Sender, self}, prelude::{WidgetExt, GroupExt, WidgetBase, MenuExt, DisplayExt}, enums::{Color, Align, Shortcut}, button::Button, group::{Flex, self}, menu::{SysMenuBar, self}, text::{TextEditor, TextBuffer, self}};
 use grid::Grid;
-use fltk_theme::{WidgetScheme, colors::html::Green};
+use fltk_theme::WidgetScheme;
 use fltk_theme::SchemeType;
 use fltk_theme::widget_themes;
 use crate::Board;
