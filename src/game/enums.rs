@@ -111,7 +111,7 @@ impl Display for TreeSize {
 This enum represents the fertility of a spot on the board.
 This is mostly only relevant for determining harvesting points,
 and is only kept as an enum to make things connect better for those purposes."]
-pub enum Fertility {
+pub(crate) enum Fertility {
     OneLeaf,
     TwoLeaf,
     ThreeLeaf,
@@ -149,7 +149,7 @@ impl Display for Fertility {
     }//end fmt(&self, f)
 }//end impl Display for Fertility
 
-pub trait MovingLightDirection {
+pub(crate) trait MovingLightDirection {
     /// The next direction the light will be in.
     fn next(&self) -> Self;
 }//end trait MovingLightDirection
@@ -205,7 +205,7 @@ impl MovingLightDirection for SunDirection {
 This enum represents the direction that the moon light is pointing towards.
 It should be noted that this is only a general direction, as moon light points in two diagonal directions.
 North, for example, would indicate the moon is pointing northeast and northwest."]
-pub enum MoonDirection {
+pub(crate) enum MoonDirection {
     South,
     East,
     North,
