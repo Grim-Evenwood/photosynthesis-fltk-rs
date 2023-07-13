@@ -3,7 +3,7 @@ use grid::Grid;
 use fltk_theme::WidgetScheme;
 use fltk_theme::SchemeType;
 use fltk_theme::widget_themes;
-use crate::Board;
+use crate::{Board, game::Fertility};
 
 pub struct GUI {
 	/// application everything runs inside of 
@@ -248,8 +248,16 @@ impl GUI {
 				if new_button.width() < get_max_grid_button_width() || new_button.height() < get_max_grid_button_height() {
 					new_button.set_label("");
 				}// end if button is too small
-
+				
+				// fertility button colors
 				new_button.set_color(Color::from_rgb(50, 168, 82));
+				let this_board_spot = board_state.board.get(row, col).unwrap();
+				match this_board_spot.fertility {
+					Fertility::OneLeaf => new_button.set_color(Color::from_rgb(147, 196, 125)),
+					Fertility::TwoLeaf => new_button.set_color(Color::from_rgb(106, 168, 79)),
+					Fertility::ThreeLeaf => new_button.set_color(Color::from_rgb(56, 118, 29)),
+					Fertility::FourLeaf => new_button.set_color(Color::from_rgb(39, 78, 19)),
+				}
 
 				// add buttton click event
 				new_button.emit(self.msg_sender.clone(), format!("uwu board:{},{}", row, col));
