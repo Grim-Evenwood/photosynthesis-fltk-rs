@@ -258,7 +258,7 @@ impl GUI {
 		flex.fill_flex(&board);
 
 		// make flex show up 
-		flex.outer_flex.set_pos(1000, 670);
+		flex.outer_flex.set_pos(10, 100);
 		println!("width:{} height:{}", flex.outer_flex.width(), flex.outer_flex.height());
 		self.main_window.add(&flex.outer_flex);
 		flex.outer_flex.recalc();
