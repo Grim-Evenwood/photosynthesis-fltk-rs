@@ -244,6 +244,8 @@ impl GUI {
 					new_button.set_label("");
 				}// end if button is too small
 
+				new_button.set_color(Color::Green);
+
 				// add buttton click event
 				new_button.emit(self.msg_sender.clone(), format!("uwu board:{},{}", row, col));
 
@@ -262,7 +264,6 @@ impl GUI {
 		println!("width:{} height:{}", flex.outer_flex.width(), flex.outer_flex.height());
 		self.main_window.add(&flex.outer_flex);
 		flex.outer_flex.recalc();
-		flex.outer_flex.set_color(Color::Green);
 
 	}//end initialize_board(&mut self, board)
 }//end impl for GUI
