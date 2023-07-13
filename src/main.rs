@@ -21,19 +21,32 @@ fn main() {
 	let mut initial_trees_to_buy = Vec::new();
 	let mut initial_trees_available = Vec::new();
 	initial_trees_to_buy.push(Tree {color: (0,0,0), size: game::TreeSize::Seed});
+	initial_trees_to_buy.push(Tree {color: (0,0,0), size: game::TreeSize::Seed});
+	initial_trees_to_buy.push(Tree {color: (0,0,0), size: game::TreeSize::Seed});
+	initial_trees_to_buy.push(Tree {color: (0,0,0), size: game::TreeSize::Seed});
+	
 	initial_trees_to_buy.push(Tree {color: (0,0,0), size: game::TreeSize::Small});
 	initial_trees_to_buy.push(Tree {color: (0,0,0), size: game::TreeSize::Small});
+	initial_trees_to_buy.push(Tree {color: (0,0,0), size: game::TreeSize::Small});
+	initial_trees_to_buy.push(Tree {color: (0,0,0), size: game::TreeSize::Small});
+
 	initial_trees_to_buy.push(Tree {color: (0,0,0), size: game::TreeSize::Medium});
 	initial_trees_to_buy.push(Tree {color: (0,0,0), size: game::TreeSize::Medium});
+	initial_trees_to_buy.push(Tree {color: (0,0,0), size: game::TreeSize::Medium});
+	
 	initial_trees_to_buy.push(Tree {color: (0,0,0), size: game::TreeSize::Large});
 	initial_trees_to_buy.push(Tree {color: (0,0,0), size: game::TreeSize::Large});
-	initial_trees_to_buy.push(Tree {color: (0,0,0), size: game::TreeSize::Large});
+
 	initial_trees_available.push(Tree {color: (0,0,0), size: game::TreeSize::Seed});
 	initial_trees_available.push(Tree {color: (0,0,0), size: game::TreeSize::Seed});
-	initial_trees_available.push(Tree {color: (0,0,0), size: game::TreeSize::Seed});
+
 	initial_trees_available.push(Tree {color: (0,0,0), size: game::TreeSize::Small});
 	initial_trees_available.push(Tree {color: (0,0,0), size: game::TreeSize::Small});
+	initial_trees_available.push(Tree {color: (0,0,0), size: game::TreeSize::Small});
+	initial_trees_available.push(Tree {color: (0,0,0), size: game::TreeSize::Small});
+
 	initial_trees_available.push(Tree {color: (0,0,0), size: game::TreeSize::Medium});
+	
 	gui.initialize_tree_lists(initial_trees_to_buy, initial_trees_available);
 
 	// display gui and start program

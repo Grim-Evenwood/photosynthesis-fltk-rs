@@ -1,4 +1,4 @@
-use fltk::{window::Window, app::{App, Receiver, Sender, self}, prelude::{WidgetExt, GroupExt, WidgetBase, MenuExt, DisplayExt}, enums::{Color, Align, Shortcut}, button::Button, group::{Flex, self}, menu::{SysMenuBar, self, Choice}, text::{TextEditor, TextBuffer, self, TextDisplay}};
+use fltk::{window::Window, app::{App, Receiver, Sender, self, check}, prelude::{WidgetExt, GroupExt, WidgetBase, MenuExt, DisplayExt}, enums::{Color, Align, Shortcut}, button::Button, group::{Flex, self}, menu::{SysMenuBar, self, Choice}, text::{TextEditor, TextBuffer, self, TextDisplay}, examples::counter};
 use grid::Grid;
 use fltk_theme::WidgetScheme;
 use fltk_theme::SchemeType;
@@ -294,21 +294,60 @@ impl GUI {
 		self.buying_trees_choice.set_color(Color::from_rgb(56, 118, 29));
 		self.buying_trees_choice.set_text_color(Color::White);
 		self.main_window.add(&self.buying_trees_choice);
+
+		
 	}//end initialize_tree_lists(self, to_buy, available)
 
 	pub fn update_tree_lists(&mut self, to_buy: Vec<Tree>, available: Vec<Tree>) {
 		// clear any previous options
 		self.buying_trees_choice.clear();
 
-		let num_small_trees = 3;
+		let mut num_seeds = 0;
+		let mut num_small_trees = 0;
+		let mut num_med_trees = 0;
+		let mut num_large_trees = 0;
+		
+		for tree in to_buy {
+			match tree.size {
+				crate::game::TreeSize::Seed => num_seeds += 1,
+				crate::game::TreeSize::Small => num_small_trees += 1,
+				crate::game::TreeSize::Medium => num_med_trees += 1,
+				crate::game::TreeSize::Large => num_large_trees += 1
+			}
+		}
+
+		self.buying_trees_choice.add_emit(
+			format!("Seed ({})", num_seeds).as_str(),
+			Shortcut::None,
+			menu::MenuFlag::Normal,
+			self.msg_sender.clone(),
+			"Buy:Seed".to_string()
+		);
 
 		self.buying_trees_choice.add_emit(
 			format!("Small Tree ({})", num_small_trees).as_str(), 
 			Shortcut::None, 
 			menu::MenuFlag::Normal, 
 			self.msg_sender.clone(),
-			"Buy:SmallTree".to_string()
+			"Buy:Small".to_string()
 		);
+
+		self.buying_trees_choice.add_emit(
+			format!("Medium Tree ({})", num_med_trees).as_str(),
+			Shortcut::None,
+			menu::MenuFlag::Normal,
+			self.msg_sender.clone(),
+			"Buy:Medium".to_string()
+		);
+
+		self.buying_trees_choice.add_emit(
+			format!("Large Tree ({})", num_large_trees).as_str(),
+			Shortcut::None,
+			menu::MenuFlag::Normal,
+			self.msg_sender.clone(),
+			"Buy:Large".to_string()
+		);
+
 	}//end update_tree_lists(self, to_buy, available)
 }//end impl for GUI
 
