@@ -244,6 +244,8 @@ impl GUI {
 
 		let mut board: Grid<Button> = Grid::new(board_state.board.rows(),board_state.board.cols());
 		self.board_flex_grid = FlexGrid::default();
+		self.board_flex_grid.clear_inner_flexes();
+		self.board_flex_grid.outer_flex.clear();
 		
 		// intiailize board 
 		for row in 0..board.rows(){
