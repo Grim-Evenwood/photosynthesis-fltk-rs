@@ -1,6 +1,6 @@
-use fltk::{window::Window, app::{App, Receiver, Sender, self}, prelude::{WidgetExt, GroupExt, WidgetBase, MenuExt, DisplayExt}, enums::{Color, Align, Shortcut}, button::Button, group::{Flex, self}, menu::{SysMenuBar, self}, text::{TextEditor, TextBuffer, self}};
+use fltk::{window::Window, app::{App, Receiver, Sender, self}, prelude::{WidgetExt, GroupExt, WidgetBase, MenuExt, DisplayExt}, enums::{Color, Align, Shortcut}, button::{Button, self}, group::{Flex, self}, menu::{SysMenuBar, self}, text::{TextEditor, TextBuffer, self}};
 use grid::Grid;
-use fltk_theme::WidgetScheme;
+use fltk_theme::{WidgetScheme, colors::html::Green};
 use fltk_theme::SchemeType;
 use fltk_theme::widget_themes;
 use crate::Board;
@@ -229,7 +229,41 @@ impl GUI {
 		and displaying it in a FlexGrid.
 		*/
 
-		todo!();
+		let mut board: Grid<Button> = Grid::new(board_state.board.rows(),board_state.board.cols());
+		let mut flex = FlexGrid::default();
+		
+		// intiailize board 
+		for row in 0..board.rows(){
+			for col in 0..board.cols(){
+				//settings for button
+				let mut new_button = Button::default();
+				new_button.set_label(&format!("row:{}, col:{}", row, col));
+				new_button.set_size(get_default_grid_width() / board.cols() as i32, get_default_grid_height() / board.rows() as i32);
+
+				if new_button.width() < get_max_grid_button_width() || new_button.height() < get_max_grid_button_height() {
+					new_button.set_label("");
+				}// end if button is too small
+
+				// add buttton click event
+				new_button.emit(self.msg_sender.clone(), format!("uwu board:{},{}", row, col));
+
+				// add button into grid space
+				let grid_spot = board.get_mut(row, col).unwrap();
+				*grid_spot = new_button;
+			}// end looping for columns
+		}// end looping for rows 
+
+		// initialize flex grid
+		flex.initialize_flex(board_state.board.rows(),board_state.board.cols());
+		flex.fill_flex(&board);
+
+		// make flex show up 
+		flex.outer_flex.set_pos(1000, 670);
+		println!("width:{} height:{}", flex.outer_flex.width(), flex.outer_flex.height());
+		self.main_window.add(&flex.outer_flex);
+		flex.outer_flex.recalc();
+		flex.outer_flex.set_color(Color::Green);
+
 	}//end initialize_board(&mut self, board)
 }//end impl for GUI
 
