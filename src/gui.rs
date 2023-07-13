@@ -248,7 +248,7 @@ impl GUI {
 			for col in 0..board.cols(){
 				//settings for button
 				let mut new_button = Button::default();
-				new_button.set_label(&format!("row:{}, col:{}", row, col));
+				new_button.set_label(&format!("row:{}\ncol:{}", row, col));
 				new_button.set_size(get_default_grid_width() / board.cols() as i32, get_default_grid_height() / board.rows() as i32);
 
 				if new_button.width() < get_max_grid_button_width() || new_button.height() < get_max_grid_button_height() {
