@@ -24,6 +24,8 @@ pub struct GUI {
 	pub light_pts:TextBuffer,
 	/// info bar lunar points 
 	pub lunar_pts:TextBuffer,
+	/// UI GUI board display
+	pub board_flex_grid:FlexGrid,
 }//end struct GUI
 
 impl Default for GUI {
@@ -42,6 +44,7 @@ impl Default for GUI {
 			player_points:TextBuffer::default(),
 			light_pts:TextBuffer::default(),
 			lunar_pts:TextBuffer::default(),
+			board_flex_grid:FlexGrid::default(),
 		}//end struct construction
 	}//end default()
 }//end impl Default for GUI
@@ -232,7 +235,7 @@ impl GUI {
 		*/
 
 		let mut board: Grid<Button> = Grid::new(board_state.board.rows(),board_state.board.cols());
-		let mut flex = FlexGrid::default();
+		self.board_flex_grid = FlexGrid::default();
 		
 		// intiailize board 
 		for row in 0..board.rows(){
@@ -258,13 +261,13 @@ impl GUI {
 		}// end looping for rows 
 
 		// initialize flex grid
-		flex.initialize_flex(board_state.board.rows(),board_state.board.cols());
-		flex.fill_flex(&board);
+		self.board_flex_grid.initialize_flex(board_state.board.rows(),board_state.board.cols());
+		self.board_flex_grid.fill_flex(&board);
 
 		// make flex show up 
-		flex.outer_flex.set_pos(get_default_win_width() - get_default_grid_width() - 100, 175);
-		self.main_window.add(&flex.outer_flex);
-		flex.outer_flex.recalc();
+		self.board_flex_grid.outer_flex.set_pos(get_default_win_width() - get_default_grid_width() - 100, 175);
+		self.main_window.add(&self.board_flex_grid.outer_flex);
+		self.board_flex_grid.outer_flex.recalc();
 
 	}//end initialize_board(&mut self, board)
 }//end impl for GUI
