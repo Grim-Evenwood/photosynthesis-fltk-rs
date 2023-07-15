@@ -402,10 +402,12 @@ impl FlexGrid {
 	/// 
 	/// constructs the empty FlexGrid
 	pub fn default() -> FlexGrid {
+		let new_outer_flex = Flex::new(0, get_default_menu_height() + get_default_tab_padding(), get_default_grid_width(), get_default_grid_height(), None);
+		new_outer_flex.end();
 		FlexGrid {
-			buttons:Grid::new(0,0),
-			outer_flex:Flex::new(0, get_default_menu_height() + get_default_tab_padding(), get_default_grid_width(), get_default_grid_height(), None),
-			inner_flexes:Vec::new(),
+			buttons: Grid::new(0,0),
+			outer_flex: new_outer_flex,
+			inner_flexes: Vec::new(),
 		}//end struct construction
 	}//end new()
 
