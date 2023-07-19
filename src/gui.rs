@@ -142,6 +142,16 @@ impl GUI {
 		self.main_window.add(&frame);
 	}//end initialize_sun(&mut self)
 	
+	pub fn initialize_moon(&mut self) {
+		let mut frame = Frame::default()
+			.with_size(100,100)
+			.with_pos(get_default_win_width() - get_default_grid_width() + 300, 125);
+		let mut image = PngImage::load("imgs/photosynthesis moon full.png").unwrap();
+		image.scale(200, 200, true, true);
+		frame.set_image(Some(image));
+
+		self.main_window.add(&frame);
+	}
 
 	/// # show(self)
 	pub fn show(&mut self){
