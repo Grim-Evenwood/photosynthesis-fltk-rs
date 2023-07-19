@@ -303,7 +303,7 @@ impl GUI {
 		self.main_window.add(&self.buying_trees_choice);
 
 		self.available_trees_display = TextDisplay::default()
-			.with_size(135,135)
+			.with_size(135,150)
 			.below_of(&self.buying_trees_choice,100)
 			.with_label("Available Area")
 			.with_align(Align::LeftTop);
