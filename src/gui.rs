@@ -134,12 +134,66 @@ impl GUI {
 	pub fn initialize_sun(&mut self) {
 		match PngImage::load("imgs/photosynthesis sun.png") {
 			Ok(mut image) => {
-				let mut frame = Frame::default()
+
+				let grid_x = get_default_win_width() - get_default_grid_width() - get_default_grid_padding();
+				let grid_y = 175;
+				
+				// southwest sun
+				let mut frame_sw = Frame::default()
 					.with_size(100,100)
-					.with_pos(get_default_win_width() - get_default_grid_width() - 150, 125);
-				image.scale(400, 400, true, true);
-				frame.set_image(Some(image));
-				self.main_window.add(&frame);
+					.with_pos(grid_x - 50, grid_y + get_default_grid_height() - 50);
+				frame_sw.set_image(Some(image.clone()));
+				self.main_window.add(&frame_sw);
+			
+				// west sun
+				let mut frame_w = Frame::default()
+					.with_size(100,100)
+					.with_pos(grid_x - 50, grid_y + (get_default_grid_height() / 2) - 50);
+				frame_w.set_image(Some(image.clone()));
+				self.main_window.add(&frame_w);
+
+				// northwest sun
+				let mut frame_nw = Frame::default()
+				.with_size(100,100)
+				.with_pos(grid_x - 50, grid_y - 50);
+			//image.scale(400, 400, true, true);
+				frame_nw.set_image(Some(image.clone()));
+				self.main_window.add(&frame_nw);
+
+				// north sun
+				let mut frame_n = Frame::default()
+				.with_size(100,100)
+					.with_pos(grid_x + (get_default_grid_width() / 2) - 50, grid_y - 50);
+				frame_n.set_image(Some(image.clone()));
+				self.main_window.add(&frame_n);
+
+				// northeast sun
+				let mut frame_ne = Frame::default()
+					.with_size(100,100)
+					.with_pos(grid_x + get_default_grid_width() - 50, grid_y - 50);
+				frame_ne.set_image(Some(image.clone()));
+				self.main_window.add(&frame_ne);
+
+				// east sun
+				let mut frame_e = Frame::default()
+					.with_size(100,100)
+					.with_pos(grid_x + get_default_grid_width() - 50, grid_y + (get_default_grid_height() / 2) - 50);
+				frame_e.set_image(Some(image.clone()));
+				self.main_window.add(&frame_e);
+
+				// southeast sun
+				let mut frame_se = Frame::default()
+					.with_size(100,100)
+					.with_pos(grid_x + get_default_grid_width() - 50, grid_y + get_default_grid_height() - 50);
+				frame_se.set_image(Some(image.clone()));
+				self.main_window.add(&frame_se);
+
+				// south sun
+				let mut frame_s = Frame::default()
+					.with_size(100,100)
+					.with_pos(grid_x + (get_default_grid_width() / 2) - 50, grid_y + get_default_grid_height() - 50);
+				frame_s.set_image(Some(image.clone()));
+				self.main_window.add(&frame_s);
 			},
 			Err(e) => {
 				println!("Couldn't load sun image for some reason. Details:\n{}", e);
@@ -415,6 +469,7 @@ fn get_max_grid_button_height() -> i32 {15}
 fn get_default_txt_width() -> i32 {(get_default_win_width() / 6) - (get_default_txt_padding() * 3 / 2)}
 fn get_default_txt_height() -> i32 {25}
 fn get_default_txt_padding() -> i32 {10}
+fn get_default_grid_padding() -> i32 {100}
 
 /// # FlexGrid
 /// 
