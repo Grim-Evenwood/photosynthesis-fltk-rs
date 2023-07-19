@@ -13,10 +13,10 @@ fn main() {
 
 	// set up gui
 	let mut gui = GUI::default();
+	gui.initialize_sun();
 	gui.initialize();
     // gui.button_grid_test();
 	gui.initialize_menu();
-	// uncomment this line when gui.initialize_board is finished
 	gui.initialize_board(&game_board);
 	let mut initial_trees_to_buy = Vec::new();
 	let mut initial_trees_available = Vec::new();
@@ -48,7 +48,6 @@ fn main() {
 	initial_trees_available.push(Tree {color: (0,0,0), size: game::TreeSize::Medium});
 	
 	gui.initialize_tree_lists(initial_trees_to_buy, initial_trees_available);
-	gui.initialize_sun();
 
 	// display gui and start program
 	gui.show();
@@ -71,7 +70,7 @@ fn main() {
 				let comma_split_first: usize = comma_split.get(0).unwrap().parse().unwrap();
 				let comma_split_second: usize = comma_split.get(1).unwrap().parse().unwrap();
 				println!("Received test msg from the test button grid. Row:{}, Col:{}", comma_split_first, comma_split_second);
-			}//end if ffirst four chars are "test"
+			}//end if first four chars are "test"
 			else if val.starts_with("Buy") {
 				let tree_size_to_buy: TreeSize= match val.split(':').collect::<Vec<&str>>().get(1).unwrap() {
 					&"Seed" => TreeSize::Seed,
