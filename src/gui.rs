@@ -132,14 +132,19 @@ impl GUI {
 	}//end initialize(self)
 	
 	pub fn initialize_sun(&mut self) {
-		let mut frame = Frame::default()
-			.with_size(100,100)
-			.with_pos(get_default_win_width() - get_default_grid_width() - 150, 125);
-		let mut image = PngImage::load("imgs/photosynthesis sun.png").unwrap();
-		image.scale(400, 400, true, true);
-		frame.set_image(Some(image));
-
-		self.main_window.add(&frame);
+		match PngImage::load("imgs/photosynthesis sun.png") {
+			Ok(mut image) => {
+				let mut frame = Frame::default()
+					.with_size(100,100)
+					.with_pos(get_default_win_width() - get_default_grid_width() - 150, 125);
+				image.scale(400, 400, true, true);
+				frame.set_image(Some(image));
+				self.main_window.add(&frame);
+			},
+			Err(e) => {
+				println!("Couldn't load sun image for some reason. Details:\n{}", e);
+			},
+		}//end matching our image loading result
 	}//end initialize_sun(&mut self)
 	
 
