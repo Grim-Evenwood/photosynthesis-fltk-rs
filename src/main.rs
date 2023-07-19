@@ -48,6 +48,7 @@ fn main() {
 	initial_trees_available.push(Tree {color: (0,0,0), size: game::TreeSize::Medium});
 	
 	gui.initialize_tree_lists(initial_trees_to_buy, initial_trees_available);
+	gui.initialize_sun();
 
 	// display gui and start program
 	gui.show();

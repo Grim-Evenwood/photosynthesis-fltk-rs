@@ -1,4 +1,4 @@
-use fltk::{window::Window, app::{App, Receiver, Sender, self}, prelude::{WidgetExt, GroupExt, WidgetBase, MenuExt, DisplayExt}, enums::{Color, Align, Shortcut}, button::Button, group::{Flex, self}, menu::{SysMenuBar, self, Choice}, text::{TextEditor, TextBuffer, self, TextDisplay}};
+use fltk::{window::Window, app::{App, Receiver, Sender, self}, prelude::{WidgetExt, GroupExt, WidgetBase, MenuExt, DisplayExt, ImageExt}, enums::{Color, Align, Shortcut}, button::Button, group::{Flex, self}, menu::{SysMenuBar, self, Choice}, text::{TextEditor, TextBuffer, self, TextDisplay}, image::{SvgImage, PngImage}, frame::Frame};
 use grid::Grid;
 use fltk_theme::WidgetScheme;
 use fltk_theme::SchemeType;
@@ -129,6 +129,18 @@ impl GUI {
 		self.main_window.add(&txt6);
 	}//end initialize(self)
 	
+	pub fn initialize_sun(&mut self) {
+		let mut frame = Frame::default()
+			.with_size(100,100)
+			.above_of(&self.board_flex_grid.outer_flex, 3);
+		let mut image = PngImage::load("imgs\\photosynthesis sun.png").unwrap();
+		image.scale(100, 100, true, true);
+		frame.set_image(Some(image));
+
+		self.main_window.add(&frame);
+	}
+	
+
 	/// # show(self)
 	pub fn show(&mut self){
 		self.main_window.show();
