@@ -1,10 +1,11 @@
-use fltk::{window::Window, app::{App, Receiver, Sender, self}, prelude::{WidgetExt, GroupExt, WidgetBase, MenuExt, DisplayExt, ImageExt}, enums::{Color, Align, Shortcut}, button::Button, group::{Flex, self}, menu::{SysMenuBar, self, Choice}, text::{TextEditor, TextBuffer, self, TextDisplay}, image::{SvgImage, PngImage}, frame::Frame};
+use fltk::{window::Window, app::{App, Receiver, Sender, self}, prelude::{WidgetExt, GroupExt, WidgetBase, MenuExt, DisplayExt, ImageExt}, enums::{Color, Align, Shortcut}, button::Button, group::{Flex, self}, menu::{SysMenuBar, self, Choice}, text::{TextEditor, TextBuffer, self, TextDisplay}, image::PngImage, frame::Frame};
 use grid::Grid;
 use fltk_theme::WidgetScheme;
 use fltk_theme::SchemeType;
 use fltk_theme::widget_themes;
 use crate::{Board, game::{Fertility, Tree}};
 
+#[warn(missing_docs)]
 pub struct GUI {
 	/// application everything runs inside of 
 	pub app:App,
@@ -57,6 +58,7 @@ impl Default for GUI {
 	}//end default()
 }//end impl Default for GUI
 
+#[warn(missing_docs)]
 impl GUI {
 	/// # initialize(self)
 	pub fn initialize(&mut self) {
@@ -138,7 +140,7 @@ impl GUI {
 		frame.set_image(Some(image));
 
 		self.main_window.add(&frame);
-	}
+	}//end initialize_sun(&mut self)
 	
 
 	/// # show(self)
