@@ -134,9 +134,9 @@ impl GUI {
 	pub fn initialize_sun(&mut self) {
 		let mut frame = Frame::default()
 			.with_size(100,100)
-			.above_of(&self.board_flex_grid.outer_flex,3);
+			.with_pos(get_default_win_width() - get_default_grid_width() - 150, 125);
 		let mut image = PngImage::load("imgs/photosynthesis sun.png").unwrap();
-		image.scale(150, 150, true, true);
+		image.scale(400, 400, true, true);
 		frame.set_image(Some(image));
 
 		self.main_window.add(&frame);
