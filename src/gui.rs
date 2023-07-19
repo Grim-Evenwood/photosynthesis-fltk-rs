@@ -133,7 +133,7 @@ impl GUI {
 		let mut frame = Frame::default()
 			.with_size(100,100)
 			.above_of(&self.board_flex_grid.outer_flex, 3);
-		let mut image = PngImage::load("imgs\\photosynthesis sun.png").unwrap();
+		let mut image = PngImage::load("imgs/photosynthesis sun.png").unwrap();
 		image.scale(100, 100, true, true);
 		frame.set_image(Some(image));
 
