@@ -160,9 +160,8 @@ impl GUI {
 			Err(e) => {
 				println!("Couldn't load moon image for some reason. Details:\n{}", e);
 			},
-		}
-
-	}
+		}//end matching image loading result
+	}//end initalize_moon(&mut self)
 
 	/// # show(self)
 	pub fn show(&mut self){
