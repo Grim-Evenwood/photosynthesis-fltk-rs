@@ -1,4 +1,4 @@
-use fltk::{window::Window, app::{App, Receiver, Sender, self}, prelude::{WidgetExt, GroupExt, WidgetBase, MenuExt, DisplayExt, ImageExt}, enums::{Color, Align, Shortcut}, button::Button, group::{Flex, self}, menu::{SysMenuBar, self, Choice}, text::{TextEditor, TextBuffer, self, TextDisplay}, image::PngImage, frame::Frame};
+use fltk::{window::Window, app::{App, Receiver, Sender, self}, prelude::{WidgetExt, GroupExt, WidgetBase, MenuExt, DisplayExt, ImageExt}, enums::{Color, Align, Shortcut}, button::Button, group::{Flex, self}, menu::{SysMenuBar, self, Choice}, text::{TextEditor, TextBuffer, self, TextDisplay}, image::{PngImage, JpegImage}, frame::Frame};
 use grid::Grid;
 use fltk_theme::WidgetScheme;
 use fltk_theme::SchemeType;
@@ -62,6 +62,17 @@ impl Default for GUI {
 impl GUI {
 	/// # initialize(self)
 	pub fn initialize(&mut self) {
+		// background 
+		match JpegImage::load("imgs/photosynthesis soil.jpg") {
+			Ok(image) => {
+				let mut frame_background = Frame::default()
+				.with_size(get_default_win_width(), get_default_win_height());
+			frame_background.set_image(Some(image));
+			},
+			Err(e) => {
+				println!("Couldn't load background image for some reason. Details:\n{}", e);
+			},
+		}
 		// Widget Scheme 
 		let widget_scheme = WidgetScheme::new(SchemeType::Aqua);
 		widget_scheme.apply();
@@ -72,6 +83,7 @@ impl GUI {
 		self.main_window.set_label("uwu Photosynthesis");
 		self.main_window.set_label_size(32);
 		self.main_window.set_label_color(Color::Green);
+		self.main_window.set_color(Color::from_rgb(101, 68, 24));
 
 		// top menu bar settings
 		self.menu.set_size(get_default_win_width(), get_default_menu_height());
