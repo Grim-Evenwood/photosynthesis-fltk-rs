@@ -73,6 +73,10 @@ impl GUI {
 				println!("Couldn't load background image for some reason. Details:\n{}", e);
 			},
 		}
+
+		self.initialize_sun();
+		self.initialize_moon();
+
 		// Widget Scheme 
 		let widget_scheme = WidgetScheme::new(SchemeType::Aqua);
 		widget_scheme.apply();

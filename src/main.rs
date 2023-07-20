@@ -13,8 +13,6 @@ fn main() {
 
 	// set up gui
 	let mut gui = GUI::default();
-	gui.initialize_sun();
-	gui.initialize_moon();
 	gui.initialize();
     // gui.button_grid_test();
 	gui.initialize_menu();
