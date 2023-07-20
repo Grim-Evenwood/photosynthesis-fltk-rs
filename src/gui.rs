@@ -94,29 +94,40 @@ impl GUI {
 		self.menu.set_label_size(10);
 		self.menu.set_label_color(Color::Green);
 
-		// frames to display what each info box is
+		// turn text display box
 		let mut turn_text_display = TextDisplay::default()
 			.with_size(get_default_txt_width() / 2, get_default_txt_height())
 			.with_pos(get_default_txt_padding() * 2, self.menu.height() + self.menu.y() + 25);
 
-		// text editor boxes to display the info
+		// turn text editor
 		let mut txt1 = TextEditor::default()
 			.with_size(get_default_txt_width() / 2,get_default_txt_height())
 			.right_of(&turn_text_display, get_default_txt_padding());
 		txt1.set_label_color(Color::from_rgb(106, 168, 79));
 
-		let mut txt2 = TextEditor::default()
-			.with_size(get_default_txt_width(),get_default_txt_height())
-			.with_label("Player/Computer Pts")
+		// player points text display
+		let mut player_points_display = TextDisplay::default()
+			.with_size(3 * get_default_txt_width() / 4, get_default_txt_height())
 			.right_of(&txt1, get_default_txt_padding());
+
+		// player points text editor
+		let mut txt2 = TextEditor::default()
+			.with_size(get_default_txt_width() / 4,get_default_txt_height())
+			.right_of(&player_points_display, get_default_txt_padding());
 		txt2.set_label_color(Color::from_rgb(106, 168, 79));
 
-		let mut txt3 = TextEditor::default()
-			.with_size(get_default_txt_width(),get_default_txt_height())
-			.with_label("Light Pts")
+		// light points text display 
+		let mut light_points_text_display = TextDisplay::default()
+			.with_size(3 * get_default_txt_width() / 4, get_default_txt_height())
 			.right_of(&txt2, get_default_txt_padding());
+
+		// Light points text editor
+		let mut txt3 = TextEditor::default()
+			.with_size(get_default_txt_width() / 4,get_default_txt_height())
+			.right_of(&light_points_text_display, get_default_txt_padding());
 		txt3.set_label_color(Color::from_rgb(106, 168, 79));	
 
+		// lunar points text editor
 		let mut txt4 = TextEditor::default()
 			.with_size(get_default_txt_width(),get_default_txt_height())
 			.with_label("Lunar Pts")
@@ -148,6 +159,14 @@ impl GUI {
 		turn_text_display_buf.set_text("Turn");
 		turn_text_display.set_buffer(turn_text_display_buf);
 
+		let mut player_points_display_buf = TextBuffer::default();
+		player_points_display_buf.set_text("Player / Computer Points");
+		player_points_display.set_buffer(player_points_display_buf);
+
+		let mut light_points_display_buf = TextBuffer::default();
+		light_points_display_buf.set_text("Light Points");
+		light_points_text_display.set_buffer(light_points_display_buf);
+
 		txt1.wrap_mode(text::WrapMode::AtBounds, 0);
 		txt2.wrap_mode(text::WrapMode::AtBounds, 0);
 		txt3.wrap_mode(text::WrapMode::AtBounds, 0);
@@ -161,6 +180,8 @@ impl GUI {
 		self.main_window.add(&txt6);
 
 		self.main_window.add(&turn_text_display);
+		self.main_window.add(&player_points_display);
+		self.main_window.add(&light_points_text_display);
 	}//end initialize(self)
 	
 	pub fn initialize_sun(&mut self) {
