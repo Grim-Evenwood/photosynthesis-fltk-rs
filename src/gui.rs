@@ -127,11 +127,15 @@ impl GUI {
 			.right_of(&light_points_text_display, get_default_txt_padding());
 		txt3.set_label_color(Color::from_rgb(106, 168, 79));	
 
+		// lunar points text display 
+		let mut lunar_points_text_display = TextDisplay::default()
+			.with_size(3 * get_default_txt_width() / 4, get_default_txt_height())
+			.right_of(&txt3, get_default_txt_padding());
+
 		// lunar points text editor
 		let mut txt4 = TextEditor::default()
-			.with_size(get_default_txt_width(),get_default_txt_height())
-			.with_label("Lunar Pts")
-			.right_of(&txt3, get_default_txt_padding());
+			.with_size(get_default_txt_width() / 4,get_default_txt_height())
+			.right_of(&lunar_points_text_display, get_default_txt_padding());
 		txt4.set_label_color(Color::from_rgb(106, 168, 79));	
 		
 		let mut txt5 = Button::default()
@@ -167,6 +171,10 @@ impl GUI {
 		light_points_display_buf.set_text("Light Points");
 		light_points_text_display.set_buffer(light_points_display_buf);
 
+		let mut lunar_points_display_buf = TextBuffer::default();
+		lunar_points_display_buf.set_text("Lunar Points");
+		lunar_points_text_display.set_buffer(lunar_points_display_buf);
+
 		txt1.wrap_mode(text::WrapMode::AtBounds, 0);
 		txt2.wrap_mode(text::WrapMode::AtBounds, 0);
 		txt3.wrap_mode(text::WrapMode::AtBounds, 0);
@@ -182,6 +190,7 @@ impl GUI {
 		self.main_window.add(&turn_text_display);
 		self.main_window.add(&player_points_display);
 		self.main_window.add(&light_points_text_display);
+		self.main_window.add(&lunar_points_text_display);
 	}//end initialize(self)
 	
 	pub fn initialize_sun(&mut self) {
