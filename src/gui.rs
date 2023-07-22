@@ -442,16 +442,22 @@ impl GUI {
 	/// 
 	/// Takes list of trees which are to buy or available and initializes menu elements and lists.
 	pub fn initialize_tree_lists(&mut self, to_buy: Vec<Tree>, available: Vec<Tree>) {
-		// action buttons
+		// Buying trees choice menu
 		self.buying_trees_choice = Choice::default()
 			.with_size(135,30)
-			.with_pos(100, 175)
-			.with_label("Items to buy");
+			.with_pos(100, 175);
 		self.update_tree_lists(to_buy, available);
 		self.buying_trees_choice.set_color(Color::from_rgb(56, 118, 29));
 		self.buying_trees_choice.set_text_color(Color::White);
-		self.buying_trees_choice.set_label_color(Color::White);
 		self.main_window.add(&self.buying_trees_choice);
+
+		// buying trees label text box
+		let mut buying_trees_text_display = TextDisplay::default()
+			.with_size(80, 30)
+			.left_of(&self.buying_trees_choice, 0);
+		let mut buying_trees_display_buf = TextBuffer::default();
+		buying_trees_display_buf.set_text("Items to buy");
+		buying_trees_text_display.set_buffer(buying_trees_display_buf);
 
 		self.available_trees_display = TextDisplay::default()
 			.with_size(135,150)
