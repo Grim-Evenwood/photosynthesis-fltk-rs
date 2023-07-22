@@ -450,6 +450,7 @@ impl GUI {
 		self.update_tree_lists(to_buy, available);
 		self.buying_trees_choice.set_color(Color::from_rgb(56, 118, 29));
 		self.buying_trees_choice.set_text_color(Color::White);
+		self.buying_trees_choice.set_label_color(Color::White);
 		self.main_window.add(&self.buying_trees_choice);
 
 		self.available_trees_display = TextDisplay::default()
