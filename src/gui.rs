@@ -451,7 +451,7 @@ impl GUI {
 		self.buying_trees_choice.set_text_color(Color::White);
 		self.main_window.add(&self.buying_trees_choice);
 
-		// buying trees label text box
+		// buying trees label text display
 		let mut buying_trees_text_display = TextDisplay::default()
 			.with_size(80, 30)
 			.left_of(&self.buying_trees_choice, 0);
@@ -459,12 +459,21 @@ impl GUI {
 		buying_trees_display_buf.set_text("Items to buy");
 		buying_trees_text_display.set_buffer(buying_trees_display_buf);
 
+		// available trees text display
 		self.available_trees_display = TextDisplay::default()
 			.with_size(135,150)
 			.below_of(&self.buying_trees_choice,100)
 			.with_label("Available Area")
 			.with_align(Align::LeftTop);
-		self.available_trees_display.set_label_color(Color::White);
+		
+		// available trees label text display
+		let mut available_trees_label_text_display = TextDisplay::default()
+			.with_size(80, 30)
+			.left_of(&self.available_trees_display, 0);
+		let mut available_trees_label_buf = TextBuffer::default();
+		available_trees_label_buf.set_text("Available Area");
+		available_trees_label_text_display.set_buffer(available_trees_label_buf);
+
 
 		self.available_trees_display.set_buffer(self.availible_trees.clone());
 		self.available_trees_display.set_color(Color::from_rgb(147, 196, 125))
