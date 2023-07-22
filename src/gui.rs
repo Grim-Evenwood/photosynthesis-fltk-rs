@@ -458,6 +458,7 @@ impl GUI {
 			.below_of(&self.buying_trees_choice,100)
 			.with_label("Available Area")
 			.with_align(Align::LeftTop);
+		self.available_trees_display.set_label_color(Color::White);
 
 		self.available_trees_display.set_buffer(self.availible_trees.clone());
 		self.available_trees_display.set_color(Color::from_rgb(147, 196, 125))
