@@ -195,7 +195,7 @@ impl GUI {
 	
 	pub fn initialize_sun(&mut self) {
 		match PngImage::load("imgs/photosynthesis sun.png") {
-			Ok(mut image) => {
+			Ok(image) => {
 
 				let grid_x = get_default_win_width() - get_default_grid_width() - get_default_grid_padding();
 				let grid_y = 175;
