@@ -96,24 +96,24 @@ impl GUI {
 
 		// turn text display box
 		let mut turn_text_display = TextDisplay::default()
-			.with_size(get_default_txt_width() / 2, get_default_txt_height())
+			.with_size(1 * get_default_txt_width() / 3, get_default_txt_height())
 			.with_pos(get_default_txt_padding() * 2, self.menu.height() + self.menu.y() + 25);
 
 		// turn text editor
 		let mut txt1 = TextEditor::default()
-			.with_size(get_default_txt_width() / 2,get_default_txt_height())
-			.right_of(&turn_text_display, get_default_txt_padding());
+			.with_size(get_default_txt_width() / 4,get_default_txt_height())
+			.right_of(&turn_text_display, 0);
 		txt1.set_label_color(Color::from_rgb(106, 168, 79));
 
 		// player points text display
 		let mut player_points_display = TextDisplay::default()
-			.with_size(3 * get_default_txt_width() / 4, get_default_txt_height())
+			.with_size( 5 * get_default_txt_width() / 4, get_default_txt_height())
 			.right_of(&txt1, get_default_txt_padding());
 
 		// player points text editor
 		let mut txt2 = TextEditor::default()
-			.with_size(get_default_txt_width() / 4,get_default_txt_height())
-			.right_of(&player_points_display, get_default_txt_padding());
+			.with_size(get_default_txt_width() / 2,get_default_txt_height())
+			.right_of(&player_points_display, 0);
 		txt2.set_label_color(Color::from_rgb(106, 168, 79));
 
 		// light points text display 
@@ -124,7 +124,7 @@ impl GUI {
 		// Light points text editor
 		let mut txt3 = TextEditor::default()
 			.with_size(get_default_txt_width() / 4,get_default_txt_height())
-			.right_of(&light_points_text_display, get_default_txt_padding());
+			.right_of(&light_points_text_display, 0);
 		txt3.set_label_color(Color::from_rgb(106, 168, 79));	
 
 		// lunar points text display 
@@ -135,7 +135,7 @@ impl GUI {
 		// lunar points text editor
 		let mut txt4 = TextEditor::default()
 			.with_size(get_default_txt_width() / 4,get_default_txt_height())
-			.right_of(&lunar_points_text_display, get_default_txt_padding());
+			.right_of(&lunar_points_text_display, 0);
 		txt4.set_label_color(Color::from_rgb(106, 168, 79));	
 		
 		let mut txt5 = Button::default()
@@ -145,7 +145,7 @@ impl GUI {
 		txt5.set_label_color(Color::White);	
 
 		let mut txt6 = Button::default()
-			.with_size(get_default_txt_width(),get_default_txt_height())
+			.with_size(3 * get_default_txt_width() / 4,get_default_txt_height())
 			.with_label("End Turn")
 			.right_of(&txt5, get_default_txt_padding());
 		txt6.set_label_color(Color::White);	
