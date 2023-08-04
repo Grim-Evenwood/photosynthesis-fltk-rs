@@ -20,9 +20,6 @@ pub fn get_default_grid_padding() -> i32 {100}
 /// 
 /// This struct is meant to be a sort of wrapper around a bunch of buttons and nested flexes in order to mimic a grid of buttons.
 pub struct FlexGrid {
-	/// # buttons
-	/// The 2d array of buttons filling the grid
-	pub buttons: Grid<Button>,
 	/// # outer_flex
 	/// The flex containing the flex containing the buttons
 	outer_flex: Flex,
@@ -39,7 +36,6 @@ impl FlexGrid {
 		let new_outer_flex = Flex::new(0, get_default_menu_height() + get_default_tab_padding(), get_default_grid_width(), get_default_grid_height(), None);
 		new_outer_flex.end();
 		FlexGrid {
-			buttons: Grid::new(0,0),
 			outer_flex: new_outer_flex,
 			inner_flexes: Vec::new(),
 		}//end struct construction
@@ -51,7 +47,6 @@ impl FlexGrid {
 	pub fn clear_inner_flexes(&mut self) {
 		self.outer_flex.clear();
 		self.inner_flexes.clear();
-		self.buttons.clear();
 	}//end clear_inner_flexes(&mut self)
 
 	/// #initialize_flex(self, grid)]
