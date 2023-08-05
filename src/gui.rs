@@ -1,4 +1,4 @@
-use fltk::{window::Window, app::{App, Receiver, Sender, self}, prelude::{WidgetExt, GroupExt, WidgetBase, MenuExt, DisplayExt, ImageExt}, enums::{Color, Align, Shortcut}, button::Button, group::{Flex, self}, menu::{SysMenuBar, self, Choice}, text::{TextEditor, TextBuffer, self, TextDisplay}, image::{PngImage, JpegImage}, frame::Frame, widget_extends};
+use fltk::{window::Window, app::{App, Receiver, Sender, self}, prelude::{WidgetExt, GroupExt, WidgetBase, MenuExt, DisplayExt, ImageExt}, enums::{Color, Align, Shortcut, FrameType}, button::Button, group::{Flex, self}, menu::{SysMenuBar, self, Choice}, text::{TextEditor, TextBuffer, self, TextDisplay}, image::{PngImage, JpegImage}, frame::Frame, widget_extends};
 use grid::Grid;
 use fltk_theme::WidgetScheme;
 use fltk_theme::SchemeType;
@@ -408,7 +408,7 @@ impl GUI {
 				let mut new_button = Button::default();
 				new_button.set_label(&format!("row:{}\ncol:{}", row, col));
 				new_button.set_size(get_default_grid_width() / board.cols() as i32, get_default_grid_height() / board.rows() as i32);
-				new_button.set_frame(widget_themes::OS_RADIO_ROUND_DOWN_BOX);
+				new_button.set_frame(FrameType::FlatBox);
 
 				if new_button.width() < get_max_grid_button_width() || new_button.height() < get_max_grid_button_height() {
 					new_button.set_label("");
