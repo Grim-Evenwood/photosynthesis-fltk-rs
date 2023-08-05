@@ -41,12 +41,12 @@ impl FlexGrid {
 		}//end struct construction
 	}//end new()
 
-	pub fn change_button<'a>(&'a mut self, row:usize, col:usize) -> Result<&'a mut Widget, String> {
+	pub fn change_button(&mut self, row:usize, col:usize) -> Result<Widget, String> {
 		match self.inner_flexes.get_mut(row) {
 			Some(v) => {
 				match v.child(col as i32) {
-					Some(mut α) => {
-						return Ok(&mut α);
+					Some(a) => {
+						return Ok(a);
 					},
 					None => return Err("This is an error message".to_string())
 				};
