@@ -1,4 +1,4 @@
-use fltk::{prelude::{WidgetExt, GroupExt, WidgetBase}, button::Button, group::{Flex, self}, widget_extends, enums::Align};
+use fltk::{prelude::{WidgetExt, GroupExt, WidgetBase}, button::Button, group::{Flex, self}, widget_extends, enums::Align, widget::Widget};
 use grid::Grid;
 
 
@@ -40,6 +40,20 @@ impl FlexGrid {
 			inner_flexes: Vec::new(),
 		}//end struct construction
 	}//end new()
+
+	pub fn change_button<'a>(&'a mut self, row:usize, col:usize) -> Result<&'a mut Widget, String> {
+		match self.inner_flexes.get_mut(row) {
+			Some(v) => {
+				match v.child(col as i32) {
+					Some(mut α) => {
+						return Ok(&mut α);
+					},
+					None => return Err("This is an error message".to_string())
+				};
+			},
+			None => return Err("This is an error message".to_string()),
+		};
+	}
 
 	/// # clear_inner_flexes
 	/// 
