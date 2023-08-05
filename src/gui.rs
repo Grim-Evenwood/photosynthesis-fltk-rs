@@ -158,9 +158,9 @@ impl GUI {
 		txt2.set_buffer(self.player_points.clone());
 		txt3.set_buffer(self.light_pts.clone());
 		txt4.set_buffer(self.lunar_pts.clone());
-		txt5.set_frame(widget_themes::OS_SPACER_THIN_DOWN_BOX);
+		txt5.set_frame(widget_themes::OS_RADIO_ROUND_DOWN_BOX);
 		txt5.set_color(Color::from_rgb(68,140,184));
-		txt6.set_frame(widget_themes::OS_SPACER_THIN_DOWN_BOX);
+		txt6.set_frame(widget_themes::OS_RADIO_ROUND_DOWN_BOX);
 		txt6.set_color(Color::from_rgb(184,68,68));
 
 		let mut turn_text_display_buf = TextBuffer::default();
@@ -408,6 +408,7 @@ impl GUI {
 				let mut new_button = Button::default();
 				new_button.set_label(&format!("row:{}\ncol:{}", row, col));
 				new_button.set_size(get_default_grid_width() / board.cols() as i32, get_default_grid_height() / board.rows() as i32);
+				new_button.set_frame(widget_themes::OS_RADIO_ROUND_DOWN_BOX);
 
 				if new_button.width() < get_max_grid_button_width() || new_button.height() < get_max_grid_button_height() {
 					new_button.set_label("");
